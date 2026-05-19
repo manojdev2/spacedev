@@ -1,0 +1,3880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LocatePro Documentation</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Prism.js Syntax Highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <img src="locatepro-logo.png" alt="LocatePro" width="32" height="32" style="border-radius: 6px;">
+          <span>LocatePro</span>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search documentation...">
+        <span class="search-shortcut">⌘K</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <h3 class="nav-title">Getting Started</h3>
+          <ul class="nav-links">
+            <li><a href="#overview" class="nav-link active" data-section="overview"><span class="nav-link-icon">📚</span>Project Overview</a></li>
+            <li><a href="#architecture" class="nav-link" data-section="architecture"><span class="nav-link-icon">🏗️</span>Architecture</a></li>
+            <li><a href="#setup" class="nav-link" data-section="setup"><span class="nav-link-icon">⚙️</span>Installation & Setup</a></li>
+          </ul>
+        </div>
+        
+        <div class="nav-section">
+          <h3 class="nav-title">Frontend</h3>
+          <ul class="nav-links">
+            <li><a href="#components" class="nav-link" data-section="components"><span class="nav-link-icon">🧩</span>Components</a></li>
+            <li><a href="#pages" class="nav-link" data-section="pages"><span class="nav-link-icon">📄</span>Pages & Routing</a></li>
+            <li><a href="#state" class="nav-link" data-section="state"><span class="nav-link-icon">🔄</span>State Management</a></li>
+            <li><a href="#hooks" class="nav-link" data-section="hooks"><span class="nav-link-icon">🪝</span>Custom Hooks</a></li>
+            <li><a href="#styling" class="nav-link" data-section="styling"><span class="nav-link-icon">🎨</span>Styling</a></li>
+          </ul>
+        </div>
+        
+        <div class="nav-section">
+          <h3 class="nav-title">Backend</h3>
+          <ul class="nav-links">
+            <li><a href="#database" class="nav-link" data-section="database"><span class="nav-link-icon">🗄️</span>Database Schema</a></li>
+            <li><a href="#authentication" class="nav-link" data-section="authentication"><span class="nav-link-icon">🔐</span>Authentication</a></li>
+            <li><a href="#api" class="nav-link" data-section="api"><span class="nav-link-icon">🔌</span>API Reference</a></li>
+            <li><a href="#payments" class="nav-link" data-section="payments"><span class="nav-link-icon">💳</span>Payments & Subscriptions</a></li>
+            <li><a href="#storage" class="nav-link" data-section="storage"><span class="nav-link-icon">📦</span>Storage</a></li>
+            <li><a href="#security" class="nav-link" data-section="security"><span class="nav-link-icon">🛡️</span>Security</a></li>
+          </ul>
+        </div>
+        
+        <div class="nav-section">
+          <h3 class="nav-title">Features</h3>
+          <ul class="nav-links">
+            <li><a href="#store-locator" class="nav-link" data-section="store-locator"><span class="nav-link-icon">🗺️</span>Store Locator</a></li>
+            <li><a href="#geolocation" class="nav-link" data-section="geolocation"><span class="nav-link-icon">📍</span>Geolocation & Near Me</a></li>
+            <li><a href="#directions" class="nav-link" data-section="directions"><span class="nav-link-icon">🧭</span>Directions</a></li>
+            <li><a href="#appointments" class="nav-link" data-section="appointments"><span class="nav-link-icon">📅</span>Appointments</a></li>
+            <li><a href="#reviews" class="nav-link" data-section="reviews"><span class="nav-link-icon">⭐</span>Reviews System</a></li>
+            <li><a href="#favorites" class="nav-link" data-section="favorites"><span class="nav-link-icon">❤️</span>Favorites</a></li>
+            <li><a href="#photos" class="nav-link" data-section="photos"><span class="nav-link-icon">📸</span>Photo Gallery</a></li>
+            <li><a href="#notifications" class="nav-link" data-section="notifications"><span class="nav-link-icon">🔔</span>Notifications</a></li>
+            <li><a href="#dashboard" class="nav-link" data-section="dashboard"><span class="nav-link-icon">📊</span>Admin Dashboard</a></li>
+            <li><a href="#submissions" class="nav-link" data-section="submissions"><span class="nav-link-icon">📝</span>Store Submissions</a></li>
+            <li><a href="#store-import" class="nav-link" data-section="store-import"><span class="nav-link-icon">📥</span>Store Import</a></li>
+            <li><a href="#contact" class="nav-link" data-section="contact"><span class="nav-link-icon">✉️</span>Contact Messages</a></li>
+            <li><a href="#territories" class="nav-link" data-section="territories"><span class="nav-link-icon">🌍</span>Store Zone Management</a></li>
+          </ul>
+        </div>
+        
+        <div class="nav-section">
+          <h3 class="nav-title">Advanced</h3>
+          <ul class="nav-links">
+            <li><a href="#types" class="nav-link" data-section="types"><span class="nav-link-icon">📋</span>Type Definitions</a></li>
+            <li><a href="#testing" class="nav-link" data-section="testing"><span class="nav-link-icon">🧪</span>Testing</a></li>
+            <li><a href="#error-handling" class="nav-link" data-section="error-handling"><span class="nav-link-icon">⚠️</span>Error Handling</a></li>
+            <li><a href="#troubleshooting" class="nav-link" data-section="troubleshooting"><span class="nav-link-icon">🔧</span>Troubleshooting</a></li>
+          </ul>
+        </div>
+        
+        <div class="nav-section">
+          <h3 class="nav-title">Deployment</h3>
+          <ul class="nav-links">
+            <li><a href="#deployment" class="nav-link" data-section="deployment"><span class="nav-link-icon">🚀</span>Deployment Guide</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+          </svg>
+        </button>
+        <div class="breadcrumb" id="breadcrumb">
+          <span>Documentation</span>
+          <span class="separator">/</span>
+          <span class="current">Overview</span>
+        </div>
+        <div class="header-actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+            </svg>
+            <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="content-wrapper">
+        <article class="content" id="content">
+          <!-- Overview Section -->
+          <section id="overview" class="doc-section active">
+             <h1>LocatePro Documentation</h1>
+             <p class="lead">Welcome to the LocatePro Store Locator Platform documentation. This comprehensive guide covers everything you need to know about the project architecture, components, database schema, and development workflow.</p>
+            
+            <div class="info-cards">
+              <div class="info-card">
+                <div class="info-icon">🗺️</div>
+                <h3>Store Locator</h3>
+                <p>Interactive Google Maps integration with geolocation-based search, address autocomplete, and Street View.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">🏪</div>
+                <h3>Location Management</h3>
+                <p>Full CRUD operations, batch import, photo galleries, opening hours, and service tagging.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">👥</div>
+                <h3>Multi-Tenant</h3>
+                <p>Organization-based data isolation with role-based access control (Admin, Staff).</p>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">⭐</div>
+                <h3>Reviews & Ratings</h3>
+                <p>User reviews with star ratings, helpful votes, reporting, and admin moderation.</p>
+              </div>
+            </div>
+
+            <h2>Technology Stack</h2>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Layer</th>
+                  <th>Technology</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Frontend</td><td>React 18, TypeScript, Vite</td></tr>
+                <tr><td>Styling</td><td>Tailwind CSS, shadcn/ui</td></tr>
+                <tr><td>State</td><td>Zustand, TanStack Query</td></tr>
+                <tr><td>Backend</td><td>PostgreSQL, Edge Functions</td></tr>
+                <tr><td>Maps</td><td>Google Maps API</td></tr>
+                <tr><td>Auth</td><td>Email/Password authentication</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Project Structure</h2>
+            <pre><code>src/
+├── components/       # Reusable UI components
+│   ├── ui/          # Base shadcn/ui components
+│   ├── layout/      # Layout components (Header, Footer)
+│   ├── locator/     # Store locator components
+│   ├── admin/       # Admin dashboard components
+│   └── auth/        # Authentication components
+├── pages/           # Route pages
+│   └── dashboard/   # Protected dashboard pages
+├── hooks/           # Custom React hooks
+├── store/           # Zustand state stores
+├── contexts/        # React contexts
+├── lib/             # Utility functions
+├── types/           # TypeScript type definitions
+├── data/            # Static data (blog, demo)
+└── integrations/    # External service integrations
+
+supabase/
+├── functions/       # Edge functions
+├── migrations/      # Database migrations
+└── config.toml      # Configuration</code></pre>
+
+            <h2>Target Users</h2>
+            <div class="user-types">
+              <div class="user-type">
+                <h4>Business Owners/Managers</h4>
+                <ul>
+                  <li>Manage store locations and information</li>
+                  <li>Monitor customer reviews</li>
+                  <li>Track store submission requests</li>
+                  <li>Analyze location performance</li>
+                </ul>
+              </div>
+              <div class="user-type">
+                <h4>End Users/Customers</h4>
+                <ul>
+                  <li>Find nearby store locations</li>
+                  <li>Get directions and contact info</li>
+                  <li>Read and write reviews</li>
+                  <li>Save favorite locations</li>
+                </ul>
+              </div>
+              <div class="user-type">
+                <h4>Administrators</h4>
+                <ul>
+                  <li>Full platform access</li>
+                  <li>User and team management</li>
+                  <li>Content moderation</li>
+                  <li>System configuration</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- Architecture Section -->
+          <section id="architecture" class="doc-section">
+            <h1>System Architecture</h1>
+            
+            <h2>High-Level Architecture</h2>
+            <pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                         CLIENT (Browser)                         │
+├─────────────────────────────────────────────────────────────────┤
+│  React SPA  │  Zustand State  │  TanStack Query  │  Google Maps │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │ HTTPS
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      BACKEND SERVICES                            │
+├────────────────┬────────────────┬────────────────┬──────────────┤
+│   PostgreSQL   │  Edge Functions │    Storage     │     Auth     │
+│   Database     │   (Deno/TS)    │  (S3-compat)   │   Service    │
+└────────────────┴────────────────┴────────────────┴──────────────┘</code></pre>
+
+            <h2>State Management Strategy</h2>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>State Type</th>
+                  <th>Solution</th>
+                  <th>Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Server State</td><td>TanStack Query</td><td>Database data, API responses</td></tr>
+                <tr><td>Client State</td><td>Zustand</td><td>Auth state, UI preferences</td></tr>
+                <tr><td>Form State</td><td>React Hook Form</td><td>Form inputs, validation</td></tr>
+                <tr><td>URL State</td><td>React Router</td><td>Navigation, route params</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Database Design Principles</h2>
+            <ul class="feature-list">
+              <li><strong>Multi-Tenancy:</strong> All user data is scoped to organizations</li>
+              <li><strong>Row Level Security:</strong> Every table has RLS policies</li>
+              <li><strong>Soft Relationships:</strong> User IDs reference auth.users without foreign keys</li>
+              <li><strong>JSON for Flexibility:</strong> Complex data (opening_hours, preferences) stored as JSONB</li>
+            </ul>
+
+            <h2>Security Layers</h2>
+            <pre><code>┌─────────────────────────────────────────────┐
+│            Application Layer                 │
+│  (Input validation, sanitization)           │
+├─────────────────────────────────────────────┤
+│            Authentication Layer              │
+│  (JWT tokens, session management)           │
+├─────────────────────────────────────────────┤
+│         Row Level Security (RLS)            │
+│  (Per-table access policies)                │
+├─────────────────────────────────────────────┤
+│            Database Layer                    │
+│  (Constraints, triggers, functions)         │
+└─────────────────────────────────────────────┘</code></pre>
+
+            <h2>Key Design Patterns</h2>
+            
+            <h3>1. Custom Hook Pattern</h3>
+            <p>All data fetching is abstracted into custom hooks:</p>
+            <pre><code class="language-typescript">export function usePublicLocations() {
+  return useQuery({
+    queryKey: ['locations', 'public'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('locations')
+        .select('*')
+        .eq('is_active', true);
+      if (error) throw error;
+      return data;
+    }
+  });
+}</code></pre>
+
+            <h3>2. Component Composition</h3>
+            <pre><code>Page
+└── Layout
+    ├── Header
+    ├── Main Content
+    │   ├── Feature Component
+    │   │   ├── UI Component (shadcn)
+    │   │   └── UI Component (shadcn)
+    │   └── Feature Component
+    └── Footer</code></pre>
+
+            <h3>3. Optimistic Updates</h3>
+            <pre><code class="language-typescript">useMutation({
+  onMutate: async (newData) => {
+    await queryClient.cancelQueries({ queryKey: ['locations'] });
+    const previous = queryClient.getQueryData(['locations']);
+    queryClient.setQueryData(['locations'], (old) => [...old, newData]);
+    return { previous };
+  },
+  onError: (err, newData, context) => {
+    queryClient.setQueryData(['locations'], context.previous);
+  }
+});</code></pre>
+          </section>
+
+          <!-- Setup Section -->
+          <section id="setup" class="doc-section">
+            <h1>Installation & Setup</h1>
+            
+            <h2>Prerequisites</h2>
+            <ul class="feature-list">
+              <li>Node.js 18+ or Bun runtime</li>
+              <li>Git for version control</li>
+              <li>A code editor (VS Code recommended)</li>
+              <li>Google Maps API key (for map features)</li>
+            </ul>
+
+            <h2>Project Setup</h2>
+            
+            <h3>1. Clone the Repository</h3>
+            <pre><code class="language-bash">git clone &lt;repository-url&gt;
+cd locatepro</code></pre>
+
+            <h3>2. Install Dependencies</h3>
+            <pre><code class="language-bash"># Using npm
+npm install
+
+# Using Bun (faster)
+bun install</code></pre>
+
+            <h3>3. Environment Configuration</h3>
+            <pre><code class="language-env">VITE_SUPABASE_URL=&lt;backend-url&gt;
+VITE_SUPABASE_PUBLISHABLE_KEY=&lt;public-api-key&gt;
+VITE_SUPABASE_PROJECT_ID=&lt;project-id&gt;</code></pre>
+
+            <h3>4. Start Development Server</h3>
+            <pre><code class="language-bash">npm run dev
+# or
+bun dev</code></pre>
+            <p>The application will be available at <code>http://localhost:5173</code></p>
+
+            <h2>Available Scripts</h2>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>npm run dev</code></td><td>Start development server</td></tr>
+                <tr><td><code>npm run build</code></td><td>Build for production</td></tr>
+                <tr><td><code>npm run preview</code></td><td>Preview production build</td></tr>
+                <tr><td><code>npm run lint</code></td><td>Run ESLint</td></tr>
+                <tr><td><code>npm run test</code></td><td>Run Vitest tests</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Adding New Features</h2>
+            <ul class="feature-list">
+              <li><strong>New Component:</strong> Create in <code>src/components/&lt;category&gt;/</code></li>
+              <li><strong>New Page:</strong> Create in <code>src/pages/</code>, add route in <code>App.tsx</code></li>
+              <li><strong>New Hook:</strong> Create in <code>src/hooks/use&lt;Name&gt;.ts</code></li>
+              <li><strong>New Store:</strong> Create in <code>src/store/use&lt;Name&gt;Store.ts</code></li>
+            </ul>
+
+            <h2>Common Issues</h2>
+            <div class="callout warning">
+              <h4>Maps not loading?</h4>
+              <p>Verify GOOGLE_MAPS_API_KEY is set as a secret and check that the API key has required APIs enabled (Maps, Places, Geocoding).</p>
+            </div>
+            <div class="callout warning">
+              <h4>Authentication issues?</h4>
+              <p>Check backend connectivity and verify auto-confirm email is enabled for development.</p>
+            </div>
+          </section>
+
+          <!-- Components Section -->
+          <section id="components" class="doc-section">
+            <h1>Components Reference</h1>
+            
+            <h2>Component Organization</h2>
+            <pre><code>src/components/
+├── ui/              # Base UI primitives (shadcn/ui)
+├── layout/          # Layout components
+├── locator/         # Store locator feature
+├── admin/           # Admin dashboard components
+├── auth/            # Authentication components
+├── dashboard/       # Dashboard-specific components
+└── landing/         # Landing page components</code></pre>
+
+            <h2>Base UI Components (shadcn/ui)</h2>
+            
+            <h3>Form Components</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Component</th><th>File</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Button</td><td><code>ui/button.tsx</code></td><td>Primary action button with variants</td></tr>
+                <tr><td>Input</td><td><code>ui/input.tsx</code></td><td>Text input field</td></tr>
+                <tr><td>Textarea</td><td><code>ui/textarea.tsx</code></td><td>Multi-line text input</td></tr>
+                <tr><td>Select</td><td><code>ui/select.tsx</code></td><td>Dropdown selection</td></tr>
+                <tr><td>Checkbox</td><td><code>ui/checkbox.tsx</code></td><td>Boolean checkbox</td></tr>
+                <tr><td>Switch</td><td><code>ui/switch.tsx</code></td><td>Toggle switch</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Button Variants</h3>
+            <pre><code class="language-tsx">// Available variants
+&lt;Button variant="default"&gt;Primary action&lt;/Button&gt;
+&lt;Button variant="secondary"&gt;Secondary action&lt;/Button&gt;
+&lt;Button variant="outline"&gt;Outlined style&lt;/Button&gt;
+&lt;Button variant="ghost"&gt;Minimal style&lt;/Button&gt;
+&lt;Button variant="destructive"&gt;Dangerous action&lt;/Button&gt;
+&lt;Button variant="link"&gt;Link style&lt;/Button&gt;
+&lt;Button variant="hero"&gt;Hero CTA gradient&lt;/Button&gt;
+
+// Sizes
+&lt;Button size="sm"&gt;Small&lt;/Button&gt;
+&lt;Button size="default"&gt;Default&lt;/Button&gt;
+&lt;Button size="lg"&gt;Large&lt;/Button&gt;
+&lt;Button size="icon"&gt;Icon only&lt;/Button&gt;</code></pre>
+
+            <h2>Layout Components</h2>
+            
+            <h3>Header</h3>
+            <p><strong>File:</strong> <code>layout/Header.tsx</code></p>
+            <ul>
+              <li>Logo and brand</li>
+              <li>Navigation links</li>
+              <li>Theme switcher</li>
+              <li>Auth status/user menu</li>
+              <li>Mobile hamburger menu</li>
+            </ul>
+
+            <h3>Footer</h3>
+            <p><strong>File:</strong> <code>layout/Footer.tsx</code></p>
+            <ul>
+              <li>Logo and description</li>
+              <li>Link columns (Product, Company, Resources, Legal)</li>
+              <li>Newsletter signup form</li>
+              <li>Social media links</li>
+            </ul>
+
+            <h2>Locator Components</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Component</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>StoreLocator</td><td>Main store locator interface</td></tr>
+                <tr><td>GoogleMapView</td><td>Google Maps integration</td></tr>
+                <tr><td>SearchAutocomplete</td><td>Address search with autocomplete</td></tr>
+                <tr><td>LocationCard</td><td>Location preview card</td></tr>
+                <tr><td>LocationInfoWindow</td><td>Map marker popup</td></tr>
+                <tr><td>LocationReviews</td><td>Reviews display and submission</td></tr>
+                <tr><td>DirectionsRenderer</td><td>Route directions on map</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Pages Section -->
+          <section id="pages" class="doc-section">
+            <h1>Pages & Routing</h1>
+            
+            <h2>Route Structure</h2>
+            <pre><code>/                       → Index (Landing Page)
+/locator               → Store Locator
+/location/:id          → Location Detail
+/register-store        → Store Registration Form
+/favorites             → User Favorites
+/pricing               → Pricing Plans
+/about                 → About Us
+/contact               → Contact Form
+/blog                  → Blog Listing
+/login                 → Authentication
+
+/dashboard             → Dashboard Overview (Protected)
+/dashboard/locations   → Locations Management
+/dashboard/submissions → Store Submissions
+/dashboard/reported-reviews → Review Moderation
+/dashboard/analytics   → Analytics
+/dashboard/team        → Team Management
+/dashboard/settings    → Organization Settings
+/dashboard/profile     → User Profile</code></pre>
+
+            <h2>Public Pages</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Page</th><th>File</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Index</td><td><code>pages/Index.tsx</code></td><td>Landing page with hero, features</td></tr>
+                <tr><td>Locator</td><td><code>pages/Locator.tsx</code></td><td>Store locator interface</td></tr>
+                <tr><td>Location Detail</td><td><code>pages/LocationDetail.tsx</code></td><td>Individual location page</td></tr>
+                <tr><td>Register Store</td><td><code>pages/RegisterStore.tsx</code></td><td>Public store registration</td></tr>
+                <tr><td>Favorites</td><td><code>pages/Favorites.tsx</code></td><td>User's saved locations</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Dashboard Pages</h2>
+            <p>All dashboard pages are wrapped with <code>ProtectedRoute</code> and use <code>DashboardLayout</code>.</p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Page</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Overview</td><td>Quick stats and recent activity</td></tr>
+                <tr><td>Locations</td><td>Location management with CRUD</td></tr>
+                <tr><td>Submissions</td><td>Review public store registrations</td></tr>
+                <tr><td>Reported Reviews</td><td>Content moderation</td></tr>
+                <tr><td>Analytics</td><td>Performance metrics</td></tr>
+                <tr><td>Team</td><td>User administration</td></tr>
+                <tr><td>Settings</td><td>Organization configuration</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Route Guards</h2>
+            <pre><code class="language-typescript">function ProtectedRoute({ children }) {
+  const { user, isLoading } = useAuthStore();
+  
+  if (isLoading) return &lt;LoadingSpinner /&gt;;
+  if (!user) return &lt;Navigate to="/login" /&gt;;
+  
+  return children;
+}</code></pre>
+          </section>
+
+          <!-- State Section -->
+          <section id="state" class="doc-section">
+            <h1>State Management</h1>
+            
+            <h2>Overview</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>State Type</th><th>Solution</th><th>Use Case</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Server State</td><td>TanStack Query</td><td>Database data, caching, sync</td></tr>
+                <tr><td>Global Client State</td><td>Zustand</td><td>Auth, UI preferences</td></tr>
+                <tr><td>Form State</td><td>React Hook Form</td><td>Form inputs, validation</td></tr>
+                <tr><td>URL State</td><td>React Router</td><td>Navigation, route params</td></tr>
+                <tr><td>Local State</td><td>useState</td><td>Component-specific UI state</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Zustand Stores</h2>
+            
+            <h3>useAuthStore</h3>
+            <pre><code class="language-typescript">interface AuthState {
+  user: User | null;
+  session: Session | null;
+  isLoading: boolean;
+  isAdmin: boolean;
+  organizationId: string | null;
+  
+  // Actions
+  initialize: () => Promise&lt;void&gt;;
+  signIn: (email: string, password: string) => Promise&lt;void&gt;;
+  signUp: (email: string, password: string) => Promise&lt;void&gt;;
+  signOut: () => Promise&lt;void&gt;;
+}
+
+// Usage
+const { user, isAdmin, signIn, signOut } = useAuthStore();</code></pre>
+
+            <h2>TanStack Query Patterns</h2>
+            
+            <h3>Query Pattern</h3>
+            <pre><code class="language-typescript">const { data, isLoading, error } = useQuery({
+  queryKey: ['locations', 'public'],
+  queryFn: fetchPublicLocations,
+});</code></pre>
+
+            <h3>Mutation Pattern</h3>
+            <pre><code class="language-typescript">const mutation = useMutation({
+  mutationFn: createLocation,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['locations'] });
+    toast({ title: 'Success!' });
+  },
+});
+
+mutation.mutate(newLocationData);</code></pre>
+
+            <h2>Query Key Conventions</h2>
+            <pre><code class="language-typescript">['locations']                    // All locations
+['locations', 'public']          // Public locations
+['locations', 'org', orgId]      // Org locations
+['location', locationId]         // Single location
+['location', locationId, 'reviews'] // Location's reviews</code></pre>
+          </section>
+
+          <!-- Hooks Section -->
+          <section id="hooks" class="doc-section">
+            <h1>Custom Hooks Reference</h1>
+            
+            <h2>Data Fetching Hooks</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Hook</th><th>File</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>useLocations</td><td><code>hooks/useLocations.ts</code></td><td>Location CRUD operations</td></tr>
+                <tr><td>useReviews</td><td><code>hooks/useReviews.ts</code></td><td>Review management</td></tr>
+                <tr><td>useFavorites</td><td><code>hooks/useFavorites.ts</code></td><td>User favorites</td></tr>
+                <tr><td>useStoreSubmissions</td><td><code>hooks/useStoreSubmissions.ts</code></td><td>Submission management</td></tr>
+                <tr><td>useLocationPhotos</td><td><code>hooks/useLocationPhotos.ts</code></td><td>Photo gallery</td></tr>
+                <tr><td>useNotifications</td><td><code>hooks/useNotifications.ts</code></td><td>Notification system</td></tr>
+              </tbody>
+            </table>
+
+            <h3>useLocations</h3>
+            <pre><code class="language-typescript">// Fetch all public (active) locations
+const { data, isLoading, error } = usePublicLocations();
+
+// Create location
+const { mutate: createLocation } = useCreateLocation();
+createLocation(locationData);
+
+// Update location
+const { mutate: updateLocation } = useUpdateLocation();
+updateLocation({ id, ...updates });
+
+// Delete location
+const { mutate: deleteLocation } = useDeleteLocation();
+deleteLocation(locationId);</code></pre>
+
+            <h2>Utility Hooks</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Hook</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>useGeolocation</td><td>Browser geolocation access</td></tr>
+                <tr><td>useGoogleMapsApiKey</td><td>Fetch Maps API key</td></tr>
+                <tr><td>useMobile</td><td>Responsive breakpoint detection</td></tr>
+                <tr><td>useProfileTheme</td><td>User theme preference</td></tr>
+                <tr><td>useAutoRefresh</td><td>Automatic data refresh</td></tr>
+              </tbody>
+            </table>
+
+            <h3>useGeolocation</h3>
+            <pre><code class="language-typescript">const { 
+  position,      // { lat, lng } | null
+  error,         // GeolocationError | null
+  isLoading,     // boolean
+  refresh        // () => void
+} = useGeolocation();</code></pre>
+          </section>
+
+          <!-- Styling Section -->
+          <section id="styling" class="doc-section">
+            <h1>Styling Guide</h1>
+            
+            <h2>Design System Files</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>File</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>src/index.css</code></td><td>CSS custom properties (design tokens)</td></tr>
+                <tr><td><code>tailwind.config.ts</code></td><td>Tailwind configuration and extensions</td></tr>
+                <tr><td><code>components.json</code></td><td>shadcn/ui configuration</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Semantic Colors</h2>
+            <pre><code class="language-css">:root {
+  --background: 210 20% 98%;
+  --foreground: 222 47% 11%;
+  --primary: 174 72% 44%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 20% 96%;
+  --muted: 210 20% 96%;
+  --muted-foreground: 220 9% 46%;
+  --accent: 173 72% 48%;
+  --destructive: 0 84% 60%;
+  --border: 214 20% 90%;
+}</code></pre>
+
+            <h2>Usage in Components</h2>
+            <pre><code class="language-tsx">// ✅ Correct - uses design tokens
+&lt;div className="bg-background text-foreground"&gt;
+  &lt;h1 className="text-primary"&gt;Title&lt;/h1&gt;
+  &lt;p className="text-muted-foreground"&gt;Description&lt;/p&gt;
+&lt;/div&gt;
+
+// ❌ Wrong - hardcoded colors
+&lt;div className="bg-white text-gray-900"&gt;
+  &lt;h1 className="text-teal-500"&gt;Title&lt;/h1&gt;
+&lt;/div&gt;</code></pre>
+
+            <h2>Responsive Breakpoints</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Prefix</th><th>Min Width</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>(none)</td><td>0px</td><td>Mobile first</td></tr>
+                <tr><td><code>sm:</code></td><td>640px</td><td>Small tablets</td></tr>
+                <tr><td><code>md:</code></td><td>768px</td><td>Tablets</td></tr>
+                <tr><td><code>lg:</code></td><td>1024px</td><td>Laptops</td></tr>
+                <tr><td><code>xl:</code></td><td>1280px</td><td>Desktops</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Database Section -->
+          <section id="database" class="doc-section">
+            <h1>Database Schema</h1>
+            
+            <h2>Entity Relationship Diagram</h2>
+            <pre><code>┌─────────────────┐       ┌─────────────────┐
+│  organizations  │◄──────│   user_roles    │
+└────────┬────────┘       └────────┬────────┘
+         │                         │
+         │ 1:N                     │ N:1
+         ▼                         ▼
+┌─────────────────┐       ┌─────────────────┐
+│    locations    │       │   auth.users    │
+└────────┬────────┘       └────────┬────────┘
+         │                         │
+    ┌────┴────┐               ┌────┴────┐
+    ▼         ▼               ▼         ▼
+┌────────┐ ┌────────┐   ┌────────┐ ┌────────┐
+│location│ │reviews │   │profiles│ │favorites│
+│_photos │ │        │   │        │ │         │
+└────────┘ └────┬───┘   └────────┘ └─────────┘
+                │
+         ┌──────┴──────┐
+         ▼             ▼
+    ┌─────────┐  ┌────────────┐
+    │review_  │  │review_     │
+    │helpfuls │  │reports     │
+    └─────────┘  └────────────┘</code></pre>
+
+            <h2>Core Tables</h2>
+            
+            <h3>organizations</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>name</td><td>text</td><td>Organization name</td></tr>
+                <tr><td>logo</td><td>text</td><td>Logo URL</td></tr>
+                <tr><td>plan</td><td>subscription_plan</td><td>Subscription tier</td></tr>
+                <tr><td>max_locations</td><td>integer</td><td>Location limit</td></tr>
+              </tbody>
+            </table>
+
+            <h3>locations</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>organization_id</td><td>uuid</td><td>References organizations</td></tr>
+                <tr><td>name</td><td>text</td><td>Location name</td></tr>
+                <tr><td>address</td><td>text</td><td>Street address</td></tr>
+                <tr><td>city, state, zip_code</td><td>text</td><td>Address parts</td></tr>
+                <tr><td>lat, lng</td><td>double</td><td>Coordinates</td></tr>
+                <tr><td>phone, email</td><td>text</td><td>Contact info</td></tr>
+                <tr><td>category</td><td>location_category</td><td>Category type</td></tr>
+                <tr><td>opening_hours</td><td>jsonb</td><td>Hours by day</td></tr>
+                <tr><td>is_active</td><td>boolean</td><td>Visibility flag</td></tr>
+              </tbody>
+            </table>
+
+            <h3>reviews</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>location_id</td><td>uuid</td><td>References locations</td></tr>
+                <tr><td>user_id</td><td>uuid</td><td>References auth.users</td></tr>
+                <tr><td>rating</td><td>integer</td><td>1-5 star rating</td></tr>
+                <tr><td>title, content</td><td>text</td><td>Review content</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Database Functions</h2>
+            <pre><code class="language-sql">-- Get user's organization ID
+SELECT get_user_organization_id(auth.uid());
+
+-- Check if user is admin
+SELECT has_role(auth.uid(), 'admin');
+
+-- Check if user belongs to organization
+SELECT user_belongs_to_org(auth.uid(), 'org-uuid');</code></pre>
+          </section>
+
+          <!-- Authentication Section -->
+          <section id="authentication" class="doc-section">
+            <h1>Authentication</h1>
+            
+            <h2>Overview</h2>
+            <p>LocatePro uses email/password authentication with automatic email confirmation. The system supports role-based access control (RBAC) with two roles: Admin and Staff.</p>
+
+            <h2>Authentication Flow</h2>
+            <pre><code>┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Sign Up   │────▶│  Auto-Confirm│────▶│Create Profile│
+│   Form      │     │   Email     │     │  (Trigger)  │
+└─────────────┘     └─────────────┘     └─────────────┘
+                                               │
+                                               ▼
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  Dashboard  │◀────│   Assign    │◀────│  Org Setup  │
+│   Access    │     │    Role     │     │  (Manual)   │
+└─────────────┘     └─────────────┘     └─────────────┘</code></pre>
+
+            <h2>Auth Store</h2>
+            <pre><code class="language-typescript">const { user, isAdmin, signIn, signOut } = useAuthStore();
+
+// Sign up
+await signUp(email, password);
+
+// Sign in
+await signIn(email, password);</code></pre>
+
+            <h2>Role-Based Access Control</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Role</th><th>Permissions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>admin</td><td>Full access to organization resources</td></tr>
+                <tr><td>staff</td><td>Limited access, cannot delete locations or manage team</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Protected Routes</h2>
+            <pre><code class="language-tsx">&lt;Route path="/dashboard" element={
+  &lt;ProtectedRoute&gt;
+    &lt;DashboardLayout /&gt;
+  &lt;/ProtectedRoute&gt;
+}&gt;
+  {/* Dashboard routes */}
+&lt;/Route&gt;</code></pre>
+
+            <h2>Security Best Practices</h2>
+            <ul class="feature-list">
+              <li><strong>Never trust client-side checks:</strong> Always use RLS policies for authorization</li>
+              <li><strong>Use helper functions:</strong> Centralize role checks in database functions</li>
+              <li><strong>Validate on every request:</strong> Each query goes through RLS policies</li>
+              <li><strong>Avoid exposing user IDs:</strong> Use RLS auth.uid() instead</li>
+            </ul>
+          </section>
+
+          <!-- API Section -->
+          <section id="api" class="doc-section">
+            <h1>API Reference</h1>
+            <p class="lead">Complete reference for all Edge Functions available in the LocatePro platform. Each function is documented with request/response examples.</p>
+            
+            <div class="info-cards">
+              <div class="info-card">
+                <div class="info-icon">🤖</div>
+                <h3>AI Functions</h3>
+                <p>Smart search, recommendations, and coverage analysis powered by Gemini.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">💳</div>
+                <h3>Payment APIs</h3>
+                <p>Stripe, PayPal, and Coinbase Commerce integrations.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">📧</div>
+                <h3>Notifications</h3>
+                <p>Email (Resend) and WhatsApp (Evolution API) messaging.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">📅</div>
+                <h3>Appointments</h3>
+                <p>Booking notifications and appointment lifecycle emails.</p>
+              </div>
+            </div>
+
+            <h2>Quick Reference</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Function</th><th>Category</th><th>Auth</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>get-maps-api-key</code></td><td>Maps</td><td><span class="auth-badge">Required</span></td><td>Retrieve Google Maps API key</td></tr>
+                <tr><td><code>ai-smart-search</code></td><td>AI</td><td>—</td><td>AI-powered natural language location search</td></tr>
+                <tr><td><code>get-store-recommendations</code></td><td>AI</td><td><span class="auth-badge">Required</span></td><td>Personalized store recommendations</td></tr>
+                <tr><td><code>analyze-coverage</code></td><td>AI</td><td><span class="auth-badge">Required</span></td><td>Store zone coverage analysis with what-if simulation</td></tr>
+                <tr><td><code>scrape-store-locations</code></td><td>Import</td><td><span class="auth-badge">Required</span></td><td>Scrape locations from websites (SSE streaming)</td></tr>
+                <tr><td><code>create-checkout-session</code></td><td>Payments</td><td><span class="auth-badge">Required</span></td><td>Create Stripe checkout session</td></tr>
+                <tr><td><code>create-paypal-checkout</code></td><td>Payments</td><td><span class="auth-badge">Required</span></td><td>Create PayPal order</td></tr>
+                <tr><td><code>capture-paypal-order</code></td><td>Payments</td><td><span class="auth-badge">Required</span></td><td>Capture PayPal payment</td></tr>
+                <tr><td><code>create-coinbase-checkout</code></td><td>Payments</td><td><span class="auth-badge">Required</span></td><td>Create Coinbase Commerce charge</td></tr>
+                <tr><td><code>stripe-webhook</code></td><td>Webhooks</td><td>Signature</td><td>Handle Stripe events</td></tr>
+                <tr><td><code>coinbase-webhook</code></td><td>Webhooks</td><td>Signature</td><td>Handle Coinbase events</td></tr>
+                <tr><td><code>manage-subscription</code></td><td>Billing</td><td><span class="auth-badge">Required</span></td><td>Cancel/change subscription, billing portal</td></tr>
+                <tr><td><code>start-free-trial</code></td><td>Billing</td><td><span class="auth-badge">Required</span></td><td>Start 14-day free trial</td></tr>
+                <tr><td><code>send-appointment-notification</code></td><td>Email</td><td>—</td><td>Send appointment status emails</td></tr>
+                <tr><td><code>send-contact-notification</code></td><td>Email</td><td>—</td><td>Contact form notifications</td></tr>
+                <tr><td><code>send-submission-notification</code></td><td>Email</td><td>Admin</td><td>Store submission updates</td></tr>
+                <tr><td><code>send-whatsapp</code></td><td>Notifications</td><td><span class="auth-badge">Required</span></td><td>WhatsApp messaging via Evolution API</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Maps & Geolocation</h2>
+            
+            <!-- get-maps-api-key -->
+            <div class="api-card">
+              <div class="api-card-header">
+                <h3>get-maps-api-key</h3>
+                <span class="method post">POST</span>
+                <span class="auth-badge">Auth Required</span>
+              </div>
+              <div class="api-card-body">
+                <p class="api-card-description">Retrieves the Google Maps API key securely from server secrets. Used to initialize Google Maps on the client without exposing the key in frontend code.</p>
+                
+                <div class="api-tabs">
+                  <button class="api-tab active" data-tab="maps-request">Request</button>
+                  <button class="api-tab" data-tab="maps-response">Response</button>
+                  <button class="api-tab" data-tab="maps-example">Example</button>
+                </div>
+                
+                <div id="maps-request" class="api-tab-content active">
+                  <p><strong>Endpoint:</strong> <code>/functions/v1/get-maps-api-key</code></p>
+                  <p><strong>Headers:</strong></p>
+                  <pre><code class="language-json">{
+  "Authorization": "Bearer &lt;user-jwt-token&gt;",
+  "Content-Type": "application/json"
+}</code></pre>
+                  <p><strong>Body:</strong> None required</p>
+                </div>
+                
+                <div id="maps-response" class="api-tab-content">
+                  <p><span class="status-badge success">200 OK</span></p>
+                  <pre><code class="language-json">{
+  "apiKey": "AIzaSyB..."
+}</code></pre>
+                  <p><span class="status-badge error">401 Unauthorized</span></p>
+                  <pre><code class="language-json">{
+  "error": "Unauthorized"
+}</code></pre>
+                </div>
+                
+                <div id="maps-example" class="api-tab-content">
+                  <pre><code class="language-typescript">import { supabase } from '@/integrations/supabase/client';
+
+const { data, error } = await supabase.functions.invoke('get-maps-api-key');
+
+if (data?.apiKey) {
+  // Initialize Google Maps with the API key
+  const script = document.createElement('script');
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}`;
+  document.head.appendChild(script);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <h2>AI & Intelligence</h2>
+
+            <!-- ai-smart-search -->
+            <div class="api-card">
+              <div class="api-card-header">
+                <h3>ai-smart-search</h3>
+                <span class="method post">POST</span>
+                <span class="auth-badge" style="background: var(--bg-tertiary); color: var(--text-muted);">Optional Auth</span>
+              </div>
+              <div class="api-card-body">
+                <p class="api-card-description">Natural language search powered by Google Gemini. Parses user queries to extract structured search intent including category, location, amenities, and time preferences.</p>
+                
+                <div class="api-tabs">
+                  <button class="api-tab active" data-tab="aisearch-request">Request</button>
+                  <button class="api-tab" data-tab="aisearch-response">Response</button>
+                  <button class="api-tab" data-tab="aisearch-example">Example</button>
+                </div>
+                
+                <div id="aisearch-request" class="api-tab-content active">
+                  <p><strong>Endpoint:</strong> <code>/functions/v1/ai-smart-search</code></p>
+                  <table class="param-table">
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                      <tr>
+                        <td><span class="param-name">query</span><span class="param-type">string</span><span class="param-required">required</span></td>
+                        <td></td>
+                        <td>Natural language search query (e.g., "find a store open late near downtown with parking")</td>
+                      </tr>
+                      <tr>
+                        <td><span class="param-name">userLocation</span><span class="param-type">object</span><span class="param-optional">optional</span></td>
+                        <td></td>
+                        <td>User's current location <code>{ lat: number, lng: number }</code></td>
+                      </tr>
+                      <tr>
+                        <td><span class="param-name">currentTime</span><span class="param-type">string</span><span class="param-optional">optional</span></td>
+                        <td></td>
+                        <td>ISO timestamp for "open now" detection</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div id="aisearch-response" class="api-tab-content">
+                  <p><span class="status-badge success">200 OK</span></p>
+                  <pre><code class="language-json">{
+  "success": true,
+  "intent": {
+    "query": "store downtown parking",
+    "category": "retail",
+    "city": "downtown",
+    "state": null,
+    "radius": 10,
+    "services": ["parking"],
+    "openNow": false,
+    "openLate": true,
+    "hasParking": true,
+    "wheelchair": false,
+    "sortByDistance": true,
+    "interpretation": "Looking for retail stores open late in downtown area with parking, sorted by distance"
+  },
+  "originalQuery": "find a store open late near downtown with parking"
+}</code></pre>
+                  <p><span class="status-badge error">429 Rate Limited</span></p>
+                  <pre><code class="language-json">{
+  "error": "Rate limit exceeded. Please try again in a moment."
+}</code></pre>
+                </div>
+                
+                <div id="aisearch-example" class="api-tab-content">
+                  <pre><code class="language-typescript">const { data, error } = await supabase.functions.invoke('ai-smart-search', {
+  body: {
+    query: "wheelchair accessible retail store with wifi near me",
+    userLocation: { lat: 40.7128, lng: -74.0060 },
+    currentTime: new Date().toISOString()
+  }
+});
+
+if (data?.intent) {
+  // Use parsed intent to filter locations
+  const filteredLocations = locations.filter(loc => {
+    if (data.intent.category && loc.category !== data.intent.category) return false;
+    if (data.intent.city && !loc.city.toLowerCase().includes(data.intent.city)) return false;
+    return true;
+  });
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- send-appointment-notification -->
+            <h2>Appointment Notifications</h2>
+            
+            <div class="api-card">
+              <div class="api-card-header">
+                <h3>send-appointment-notification</h3>
+                <span class="method post">POST</span>
+              </div>
+              <div class="api-card-body">
+                <p class="api-card-description">Sends beautifully formatted HTML emails to customers for appointment lifecycle events (pending, confirmed, cancelled). Uses Resend for email delivery.</p>
+                
+                <div class="api-tabs">
+                  <button class="api-tab active" data-tab="appt-request">Request</button>
+                  <button class="api-tab" data-tab="appt-response">Response</button>
+                  <button class="api-tab" data-tab="appt-example">Example</button>
+                </div>
+                
+                <div id="appt-request" class="api-tab-content active">
+                  <p><strong>Endpoint:</strong> <code>/functions/v1/send-appointment-notification</code></p>
+                  <table class="param-table">
+                    <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+                    <tbody>
+                      <tr><td><span class="param-name">customerEmail</span><span class="param-type">string</span><span class="param-required">required</span></td><td>Customer's email address</td></tr>
+                      <tr><td><span class="param-name">customerName</span><span class="param-type">string</span><span class="param-required">required</span></td><td>Customer's display name</td></tr>
+                      <tr><td><span class="param-name">status</span><span class="param-type">"pending" | "confirmed" | "cancelled"</span><span class="param-required">required</span></td><td>Appointment status (determines email template)</td></tr>
+                      <tr><td><span class="param-name">appointmentDate</span><span class="param-type">string</span><span class="param-required">required</span></td><td>Date in YYYY-MM-DD format</td></tr>
+                      <tr><td><span class="param-name">startTime</span><span class="param-type">string</span><span class="param-required">required</span></td><td>Time in HH:MM format (24h)</td></tr>
+                      <tr><td><span class="param-name">endTime</span><span class="param-type">string</span><span class="param-required">required</span></td><td>End time in HH:MM format</td></tr>
+                      <tr><td><span class="param-name">locationName</span><span class="param-type">string</span><span class="param-required">required</span></td><td>Store/location name</td></tr>
+                      <tr><td><span class="param-name">locationAddress</span><span class="param-type">string</span><span class="param-optional">optional</span></td><td>Full address</td></tr>
+                      <tr><td><span class="param-name">serviceName</span><span class="param-type">string</span><span class="param-optional">optional</span></td><td>Booked service name</td></tr>
+                      <tr><td><span class="param-name">cancellationReason</span><span class="param-type">string</span><span class="param-optional">optional</span></td><td>Reason for cancellation (if status is cancelled)</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div id="appt-response" class="api-tab-content">
+                  <p><span class="status-badge success">200 OK</span></p>
+                  <pre><code class="language-json">{
+  "success": true,
+  "data": {
+    "id": "email-id-from-resend"
+  }
+}</code></pre>
+                  <p><span class="status-badge error">500 Error</span></p>
+                  <pre><code class="language-json">{
+  "success": false,
+  "error": "Missing required fields"
+}</code></pre>
+                </div>
+                
+                <div id="appt-example" class="api-tab-content">
+                  <pre><code class="language-typescript">// Called automatically when booking or updating appointments
+await supabase.functions.invoke('send-appointment-notification', {
+  body: {
+    customerEmail: 'john@example.com',
+    customerName: 'John Doe',
+    status: 'confirmed',
+    appointmentDate: '2024-02-15',
+    startTime: '14:00',
+    endTime: '15:00',
+    locationName: 'Downtown Branch',
+    locationAddress: '123 Main St, New York, NY 10001',
+    serviceName: 'Consultation'
+  }
+});</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- send-whatsapp -->
+            <h2>WhatsApp Notifications</h2>
+            
+            <div class="api-card">
+              <div class="api-card-header">
+                <h3>send-whatsapp</h3>
+                <span class="method post">POST</span>
+                <span class="auth-badge">Auth Required</span>
+              </div>
+              <div class="api-card-body">
+                <p class="api-card-description">Sends WhatsApp messages via Evolution API. All messages are logged in the <code>notification_logs</code> table for tracking and analytics.</p>
+                
+                <div class="api-tabs">
+                  <button class="api-tab active" data-tab="wa-request">Request</button>
+                  <button class="api-tab" data-tab="wa-response">Response</button>
+                  <button class="api-tab" data-tab="wa-example">Example</button>
+                </div>
+                
+                <div id="wa-request" class="api-tab-content active">
+                  <p><strong>Endpoint:</strong> <code>/functions/v1/send-whatsapp</code></p>
+                  <table class="param-table">
+                    <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+                    <tbody>
+                      <tr><td><span class="param-name">phone</span><span class="param-type">string</span><span class="param-required">required</span></td><td>Phone number with country code (e.g., "+1234567890")</td></tr>
+                      <tr><td><span class="param-name">message</span><span class="param-type">string</span><span class="param-required">required</span></td><td>Message content (supports WhatsApp markdown: *bold*, _italic_)</td></tr>
+                      <tr><td><span class="param-name">notificationType</span><span class="param-type">enum</span><span class="param-required">required</span></td><td>One of: <code>store_alert</code>, <code>appointment_reminder</code>, <code>submission_update</code>, <code>verification</code>, <code>marketing</code></td></tr>
+                      <tr><td><span class="param-name">userId</span><span class="param-type">string</span><span class="param-optional">optional</span></td><td>User ID to link notification to user</td></tr>
+                      <tr><td><span class="param-name">metadata</span><span class="param-type">object</span><span class="param-optional">optional</span></td><td>Additional metadata for logging</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div id="wa-response" class="api-tab-content">
+                  <p><span class="status-badge success">200 OK</span></p>
+                  <pre><code class="language-json">{
+  "success": true,
+  "messageId": "BAE5F234A1B2C3D4",
+  "timestamp": "1705329876"
+}</code></pre>
+                  <p><span class="status-badge error">500 Error</span></p>
+                  <pre><code class="language-json">{
+  "success": false,
+  "error": "EVOLUTION_API_URL is not configured"
+}</code></pre>
+                </div>
+                
+                <div id="wa-example" class="api-tab-content">
+                  <pre><code class="language-typescript">await supabase.functions.invoke('send-whatsapp', {
+  body: {
+    phone: '+1234567890',
+    message: `📅 *Appointment Confirmed*
+    
+Your appointment at *Downtown Branch* has been confirmed.
+
+📅 Date: February 15, 2024
+⏰ Time: 2:00 PM
+
+See you there!`,
+    notificationType: 'appointment_reminder',
+    metadata: { appointmentId: 'apt-123' }
+  }
+});</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- start-free-trial -->
+            <h2>Billing & Subscriptions</h2>
+            
+            <div class="api-card">
+              <div class="api-card-header">
+                <h3>start-free-trial</h3>
+                <span class="method post">POST</span>
+                <span class="auth-badge">Auth Required</span>
+              </div>
+              <div class="api-card-body">
+                <p class="api-card-description">Initiates a 14-day free trial for a user's organization. Only one trial per organization is allowed.</p>
+                
+                <div class="api-tabs">
+                  <button class="api-tab active" data-tab="trial-request">Request</button>
+                  <button class="api-tab" data-tab="trial-response">Response</button>
+                </div>
+                
+                <div id="trial-request" class="api-tab-content active">
+                  <p><strong>Endpoint:</strong> <code>/functions/v1/start-free-trial</code></p>
+                  <p><strong>Body:</strong> None required</p>
+                  <p><strong>Notes:</strong></p>
+                  <ul class="feature-list">
+                    <li>User must be authenticated</li>
+                    <li>User must belong to an organization</li>
+                    <li>Organization must not have an active subscription or previous trial</li>
+                  </ul>
+                </div>
+                
+                <div id="trial-response" class="api-tab-content">
+                  <p><span class="status-badge success">200 OK</span></p>
+                  <pre><code class="language-json">{
+  "success": true,
+  "message": "Your 14-day free trial has started!",
+  "trial_end": "2024-02-29T00:00:00.000Z"
+}</code></pre>
+                  <p><span class="status-badge error">400 Error</span></p>
+                  <pre><code class="language-json">{
+  "error": "You've already used your free trial. Please subscribe to continue."
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <h2>Client-Side API Usage</h2>
+            <pre><code class="language-typescript">import { supabase } from '@/integrations/supabase/client';
+
+// Fetch locations
+const { data, error } = await supabase
+  .from('locations')
+  .select('*')
+  .eq('is_active', true);
+
+// Insert data
+const { data, error } = await supabase
+  .from('reviews')
+  .insert({ location_id: id, rating: 5, content: 'Great!' });
+
+// Invoke edge function with auth
+const { data, error } = await supabase.functions.invoke('get-maps-api-key');
+
+// Invoke with custom body
+const { data, error } = await supabase.functions.invoke('analyze-coverage', {
+  body: { simulation_mode: false }
+});</code></pre>
+
+            <h2>Error Handling</h2>
+            <pre><code class="language-typescript">// All edge functions return consistent error format
+{
+  "error": "Error message",
+  "code": "ERROR_CODE",  // Optional
+  "details": { ... }     // Optional additional context
+}
+
+// Common HTTP status codes:
+// 200 - Success
+// 400 - Bad Request (invalid parameters)
+// 401 - Unauthorized (missing/invalid auth)
+// 402 - Payment Required (AI credits exhausted)
+// 403 - Forbidden (insufficient permissions)
+// 404 - Not Found
+// 429 - Rate Limited
+// 500 - Internal Server Error</code></pre>
+
+            <h2>Rate Limits</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Function</th><th>Limit</th><th>Window</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>analyze-coverage</code></td><td>10 requests</td><td>per minute</td></tr>
+                <tr><td><code>ai-smart-search</code></td><td>60 requests</td><td>per minute</td></tr>
+                <tr><td><code>scrape-store-locations</code></td><td>5 requests</td><td>per hour</td></tr>
+                <tr><td><code>send-whatsapp</code></td><td>100 messages</td><td>per day</td></tr>
+                <tr><td>Other functions</td><td>100 requests</td><td>per minute</td></tr>
+              </tbody>
+            </table>
+          </section>
+}</code></pre>
+
+            <h3>get-store-recommendations</h3>
+            <p>AI-powered personalized store recommendations based on user preferences and browsing history.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/get-store-recommendations</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "userPreferences": { "preferredServices": ["wifi", "parking"] },
+  "viewedLocationIds": ["loc-1", "loc-2"],
+  "currentLocation": { "lat": 40.7128, "lng": -74.0060 }
+}
+
+// Response
+{
+  "recommendations": [
+    { "locationId": "...", "score": 0.87, "reasons": ["Has preferred services", "Near your location"] }
+  ]
+}</code></pre>
+
+            <h3>analyze-coverage</h3>
+            <p>AI-powered store zone coverage analysis using Gemini. Detects gaps, overlaps, and suggests optimal new locations.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/analyze-coverage</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request (standard analysis)
+{}
+
+// Request (what-if simulation)
+{
+  "hypothetical_locations": [
+    { "name": "Proposed Downtown", "lat": 40.71, "lng": -74.01, "radius_miles": 3 }
+  ],
+  "simulation_mode": true
+}
+
+// Response
+{
+  "success": true,
+  "analysis": {
+    "coverage_percentage": 72.5,
+    "gaps": [
+      {
+        "description": "Underserved area in northern region",
+        "severity": "high",
+        "approximate_location": { "lat": 40.85, "lng": -73.95, "area_name": "Upper Manhattan" },
+        "uncovered_demand_percentage": 15
+      }
+    ],
+    "suggested_locations": [
+      {
+        "name": "Proposed: Harlem Branch",
+        "lat": 40.8116,
+        "lng": -73.9465,
+        "reason": "High demand with no coverage",
+        "estimated_coverage_improvement": 8.5,
+        "priority": "high"
+      }
+    ],
+    "overlaps": [
+      {
+        "zones": ["Downtown", "Midtown"],
+        "description": "23% overlap",
+        "recommendation": "Adjust boundary"
+      }
+    ],
+    "priority_actions": [
+      { "action": "Open Harlem location", "impact": "high", "effort": "medium" }
+    ],
+    "summary": "Current coverage is 72.5%. Three gaps identified..."
+  },
+  "simulation_result": {  // Only for simulation_mode: true
+    "original_coverage": 72.5,
+    "new_coverage": 85.3,
+    "improvement": 12.8,
+    "demand_captured": 340,
+    "recommendation": "Adding proposed locations would significantly improve coverage."
+  },
+  "metadata": {
+    "store_zones_count": 5,
+    "locations_count": 12,
+    "demand_points_count": 1250,
+    "analyzed_at": "2024-01-15T14:30:00Z"
+  }
+}</code></pre>
+
+            <h2>Store Import</h2>
+
+            <h3>scrape-store-locations</h3>
+            <p>Scrapes store locations from a website using Firecrawl and AI extraction. Streams progress via SSE.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/scrape-store-locations</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "url": "https://example.com/store-locator",
+  "organizationId": "uuid"
+}
+
+// Response (SSE Stream)
+event: progress
+data: {"stage": "mapping", "message": "Discovering location pages..."}
+
+event: progress
+data: {"stage": "scraping", "message": "Extracting content from 15 pages..."}
+
+event: progress
+data: {"stage": "extraction", "message": "AI parsing location data..."}
+
+event: progress
+data: {"stage": "geocoding", "message": "Geocoding addresses..."}
+
+event: complete
+data: {"success": true, "locations": [...], "count": 12}</code></pre>
+
+            <h2>Payment Processing</h2>
+
+            <h3>create-checkout-session (Stripe)</h3>
+            <p>Creates a Stripe Checkout session using organization-configured credentials.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/create-checkout-session</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "plan": "professional",
+  "successUrl": "https://app.com/dashboard?payment=success",
+  "cancelUrl": "https://app.com/pricing?payment=canceled"
+}
+
+// Response
+{
+  "url": "https://checkout.stripe.com/c/pay/..."
+}</code></pre>
+
+            <h3>create-paypal-checkout</h3>
+            <p>Creates a PayPal order using admin-configured credentials from payment_gateway_settings.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/create-paypal-checkout</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "plan": "professional",
+  "successUrl": "https://app.com/dashboard?payment=success&provider=paypal",
+  "cancelUrl": "https://app.com/pricing?payment=canceled"
+}
+
+// Response
+{
+  "url": "https://www.paypal.com/checkoutnow?token=..."
+}</code></pre>
+
+            <h3>capture-paypal-order</h3>
+            <p>Captures (finalizes) a PayPal payment after user approval. Called automatically on redirect.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/capture-paypal-order</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "orderId": "PAYPAL-ORDER-ID-12345"
+}
+
+// Response
+{
+  "success": true,
+  "captureId": "CAPTURE-ID-...",
+  "status": "COMPLETED"
+}</code></pre>
+
+            <h3>create-coinbase-checkout</h3>
+            <p>Creates a Coinbase Commerce charge for cryptocurrency payments.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/create-coinbase-checkout</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "plan": "professional",
+  "successUrl": "https://app.com/dashboard?payment=success&provider=crypto",
+  "cancelUrl": "https://app.com/pricing?payment=canceled"
+}
+
+// Response
+{
+  "url": "https://commerce.coinbase.com/charges/..."
+}</code></pre>
+
+            <h2>Webhooks</h2>
+
+            <h3>stripe-webhook</h3>
+            <p>Handles Stripe webhook events for subscription lifecycle management.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/stripe-webhook</code>
+              <span class="auth-badge">Signature Verified</span>
+            </div>
+            <pre><code class="language-typescript">// Handled Events:
+// - checkout.session.completed → Create/update subscription
+// - customer.subscription.updated → Update subscription status
+// - customer.subscription.deleted → Cancel subscription
+// - invoice.paid → Record payment
+// - invoice.payment_failed → Handle failed payment
+
+// Signature Verification
+const signature = req.headers.get('stripe-signature');
+const event = stripe.webhooks.constructEvent(body, signature, webhookSecret);</code></pre>
+
+            <h3>coinbase-webhook</h3>
+            <p>Handles Coinbase Commerce webhook events using Web Crypto API for signature verification.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/coinbase-webhook</code>
+              <span class="auth-badge">Signature Verified</span>
+            </div>
+            <pre><code class="language-typescript">// Handled Events:
+// - charge:confirmed → Update subscription to active
+// - charge:failed → Handle failed payment
+
+// Signature Verification (HMAC-SHA256)
+const signature = req.headers.get('X-CC-Webhook-Signature');
+const key = await crypto.subtle.importKey('raw', encoder.encode(webhookSecret), ...);
+const isValid = await crypto.subtle.verify('HMAC', key, signatureBuffer, bodyBuffer);</code></pre>
+
+            <h2>Subscription Management</h2>
+
+            <h3>manage-subscription</h3>
+            <p>Portal for users to manage their subscription (cancel, change plan, update payment).</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/manage-subscription</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "action": "cancel" | "change_plan" | "portal",
+  "plan": "enterprise"  // Required for change_plan
+}
+
+// Response (portal)
+{
+  "url": "https://billing.stripe.com/p/session/..."
+}</code></pre>
+
+            <h3>start-free-trial</h3>
+            <p>Initiates a free trial for a user's organization.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/start-free-trial</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "plan": "professional"
+}
+
+// Response
+{
+  "success": true,
+  "trialEnd": "2024-02-15T00:00:00Z",
+  "message": "14-day trial started"
+}</code></pre>
+
+            <h2>Notifications</h2>
+
+            <h3>send-contact-notification</h3>
+            <p>Sends email notifications when a contact form is submitted.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/send-contact-notification</code>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "subject": "Question about pricing",
+  "message": "I'd like to know more about..."
+}
+
+// Sends:
+// 1. Admin notification email
+// 2. Confirmation to submitter</code></pre>
+
+            <h3>send-submission-notification</h3>
+            <p>Notifies store submitters when their submission status changes.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/send-submission-notification</code>
+              <span class="auth-badge">Admin Only</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "submissionId": "uuid",
+  "status": "approved" | "rejected",
+  "notes": "Optional admin notes"
+}</code></pre>
+
+            <h3>send-invoice-email</h3>
+            <p>Sends invoice emails for completed payments.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/send-invoice-email</code>
+              <span class="auth-badge">Admin Only</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "invoiceId": "uuid",
+  "recipientEmail": "customer@example.com"
+}</code></pre>
+
+            <h3>send-whatsapp</h3>
+            <p>Sends WhatsApp notifications via Evolution API.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/send-whatsapp</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "phone": "+1234567890",
+  "message": "Your appointment is confirmed for tomorrow at 2pm.",
+  "notificationType": "appointment_reminder"
+}
+
+// Response
+{
+  "success": true,
+  "messageId": "evolution-msg-id"
+}</code></pre>
+
+            <h2>Admin Functions</h2>
+
+            <h3>create-demo-users</h3>
+            <p>Creates demo user accounts for testing purposes.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/create-demo-users</code>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "count": 5
+}
+
+// Response
+{
+  "success": true,
+  "users": [
+    { "email": "demo1@example.com", "password": "..." },
+    ...
+  ]
+}</code></pre>
+
+            <h2>Client-Side API Usage</h2>
+            <pre><code class="language-typescript">import { supabase } from '@/integrations/supabase/client';
+
+// Fetch locations
+const { data, error } = await supabase
+  .from('locations')
+  .select('*')
+  .eq('is_active', true);
+
+// Insert data
+const { data, error } = await supabase
+  .from('reviews')
+  .insert({ location_id: id, rating: 5, content: 'Great!' });
+
+// Invoke edge function with auth
+const { data, error } = await supabase.functions.invoke('get-maps-api-key');
+
+// Invoke with custom body
+const { data, error } = await supabase.functions.invoke('analyze-coverage', {
+  body: { simulation_mode: false }
+});</code></pre>
+
+            <h2>Error Handling</h2>
+            <pre><code class="language-typescript">// All edge functions return consistent error format
+{
+  "error": "Error message",
+  "code": "ERROR_CODE",  // Optional
+  "details": { ... }     // Optional additional context
+}
+
+// Common HTTP status codes:
+// 400 - Bad Request (invalid parameters)
+// 401 - Unauthorized (missing/invalid auth)
+// 403 - Forbidden (insufficient permissions)
+// 404 - Not Found
+// 429 - Rate Limited
+// 500 - Internal Server Error</code></pre>
+
+            <h2>Rate Limits</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Function</th><th>Limit</th><th>Window</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>analyze-coverage</td><td>10 requests</td><td>per minute</td></tr>
+                <tr><td>ai-smart-search</td><td>60 requests</td><td>per minute</td></tr>
+                <tr><td>scrape-store-locations</td><td>5 requests</td><td>per hour</td></tr>
+                <tr><td>send-whatsapp</td><td>100 messages</td><td>per day</td></tr>
+                <tr><td>Other functions</td><td>100 requests</td><td>per minute</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Payments Section -->
+          <section id="payments" class="doc-section">
+            <h1>Payments & Subscriptions</h1>
+            <p class="lead">LocatePro supports multiple payment gateways including Stripe, PayPal, and Coinbase Commerce for cryptocurrency payments. All credentials are stored securely in the database per organization.</p>
+            
+            <h2>Payment Architecture</h2>
+            <pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                      PAYMENT FLOW                                │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│   User selects plan → Chooses payment method → Redirected to:    │
+│                                                                   │
+│   ┌──────────────┐   ┌──────────────┐   ┌──────────────────────┐ │
+│   │   Stripe     │   │   PayPal     │   │  Coinbase Commerce   │ │
+│   │  Checkout    │   │  Checkout    │   │   Crypto Payment     │ │
+│   └──────────────┘   └──────────────┘   └──────────────────────┘ │
+│          │                  │                      │              │
+│          ▼                  ▼                      ▼              │
+│   ┌─────────────────────────────────────────────────────────────┐│
+│   │              Webhook → Update Subscription                   ││
+│   └─────────────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+
+            <h2>Supported Payment Methods</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Provider</th><th>Type</th><th>Features</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Stripe</td><td>Credit/Debit Cards</td><td>Recurring subscriptions, invoicing, webhook events</td></tr>
+                <tr><td>PayPal</td><td>PayPal Account</td><td>One-time payments, buyer protection</td></tr>
+                <tr><td>Coinbase Commerce</td><td>Cryptocurrency</td><td>BTC, ETH, USDC, and more</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Database Schema</h2>
+            
+            <h3>payment_gateway_settings</h3>
+            <p>Stores admin-configured credentials per organization:</p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>organization_id</td><td>uuid</td><td>FK to organizations</td></tr>
+                <tr><td>gateway_type</td><td>text</td><td>'stripe', 'paypal', or 'coinbase'</td></tr>
+                <tr><td>is_enabled</td><td>boolean</td><td>Enable/disable gateway</td></tr>
+                <tr><td>is_live_mode</td><td>boolean</td><td>Use live or test credentials</td></tr>
+                <tr><td>test_api_key</td><td>text</td><td>Test/sandbox API key</td></tr>
+                <tr><td>test_secret_key</td><td>text</td><td>Test/sandbox secret</td></tr>
+                <tr><td>live_api_key</td><td>text</td><td>Production API key</td></tr>
+                <tr><td>live_secret_key</td><td>text</td><td>Production secret</td></tr>
+              </tbody>
+            </table>
+
+            <h3>subscriptions</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>organization_id</td><td>uuid</td><td>FK to organizations</td></tr>
+                <tr><td>plan</td><td>subscription_plan</td><td>'starter', 'professional', 'enterprise'</td></tr>
+                <tr><td>status</td><td>subscription_status</td><td>'active', 'trialing', 'canceled', etc.</td></tr>
+                <tr><td>payment_method</td><td>payment_method</td><td>'stripe', 'paypal', 'crypto'</td></tr>
+                <tr><td>current_period_start</td><td>timestamptz</td><td>Billing period start</td></tr>
+                <tr><td>current_period_end</td><td>timestamptz</td><td>Billing period end</td></tr>
+                <tr><td>trial_end</td><td>timestamptz</td><td>Trial expiration date</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Edge Functions</h2>
+
+            <h3>create-checkout-session (Stripe)</h3>
+            <p>Creates a Stripe Checkout session for subscription payments.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/create-checkout-session</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "plan": "professional",
+  "successUrl": "https://app.com/dashboard?payment=success",
+  "cancelUrl": "https://app.com/pricing?payment=canceled"
+}
+
+// Response
+{
+  "url": "https://checkout.stripe.com/..."
+}</code></pre>
+
+            <h3>create-paypal-checkout</h3>
+            <p>Creates a PayPal order for checkout.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/create-paypal-checkout</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "plan": "professional",
+  "successUrl": "https://app.com/dashboard?payment=success&provider=paypal",
+  "cancelUrl": "https://app.com/pricing?payment=canceled"
+}
+
+// Response
+{
+  "url": "https://www.paypal.com/checkoutnow?token=..."
+}</code></pre>
+
+            <h3>capture-paypal-order</h3>
+            <p>Captures (finalizes) a PayPal payment after user approval.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/capture-paypal-order</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "orderId": "5O190127TN364715T"
+}
+
+// Response
+{
+  "success": true,
+  "captureId": "..."
+}</code></pre>
+
+            <h3>create-coinbase-checkout</h3>
+            <p>Creates a Coinbase Commerce charge for cryptocurrency payments.</p>
+            <div class="api-endpoint">
+              <span class="method post">POST</span>
+              <code>/functions/v1/create-coinbase-checkout</code>
+              <span class="auth-badge">Auth Required</span>
+            </div>
+            <pre><code class="language-json">// Request
+{
+  "plan": "professional",
+  "successUrl": "https://app.com/dashboard?payment=success&provider=crypto",
+  "cancelUrl": "https://app.com/pricing?payment=canceled"
+}
+
+// Response
+{
+  "url": "https://commerce.coinbase.com/charges/..."
+}</code></pre>
+
+            <h3>Webhooks</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Endpoint</th><th>Provider</th><th>Events</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>/functions/v1/stripe-webhook</code></td><td>Stripe</td><td>checkout.session.completed, invoice.paid, customer.subscription.updated/deleted</td></tr>
+                <tr><td><code>/functions/v1/coinbase-webhook</code></td><td>Coinbase</td><td>charge:confirmed, charge:failed</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Client Implementation</h2>
+
+            <h3>useSubscription Hook</h3>
+            <pre><code class="language-typescript">const {
+  subscription,        // Current subscription data
+  isLoading,
+  isOnTrial,           // Is user on trial?
+  daysUntilTrialEnd,   // Days remaining in trial
+  createCheckoutSession, // Start subscription flow
+} = useSubscription();
+
+// Create checkout with selected payment method
+const { url } = await createCheckoutSession({
+  plan: 'professional',
+  paymentMethod: 'stripe', // or 'paypal', 'crypto'
+});
+
+// Redirect to payment provider
+window.location.href = url;</code></pre>
+
+            <h3>PaymentMethodSelector Component</h3>
+            <pre><code class="language-tsx">&lt;PaymentMethodSelector
+  value={selectedMethod}
+  onValueChange={setSelectedMethod}
+/&gt;
+
+// Available options:
+// - stripe (Credit/Debit Card)
+// - paypal (PayPal)
+// - crypto (Cryptocurrency)</code></pre>
+
+            <h3>Payment Capture Hooks</h3>
+            <pre><code class="language-typescript">// PayPal capture (handles redirect flow)
+usePayPalCapture();  // Detects ?payment=success&provider=paypal
+
+// Crypto capture (handles redirect flow)
+useCryptoCapture();  // Detects ?payment=success&provider=crypto
+
+// Both hooks:
+// 1. Detect URL parameters on dashboard load
+// 2. Call capture endpoint if needed
+// 3. Show success/error toast
+// 4. Clean up URL parameters</code></pre>
+
+            <h2>Admin Configuration</h2>
+            <p>Admins configure payment gateways in Settings → Payment Gateways:</p>
+            <pre><code class="language-tsx">// PaymentGatewaySettings component provides:
+// - Enable/disable each gateway
+// - Switch between test/live mode
+// - Configure API keys and secrets
+// - Test mode indicator</code></pre>
+
+            <h2>Credential Retrieval</h2>
+            <p>Edge functions dynamically fetch credentials from the database:</p>
+            <pre><code class="language-typescript">// In edge function
+async function getStripeCredentials(
+  supabaseAdmin: SupabaseClient,
+  organizationId: string
+): Promise&lt;{ secretKey: string; isLiveMode: boolean }&gt; {
+  const { data } = await supabaseAdmin
+    .from('payment_gateway_settings')
+    .select('*')
+    .eq('organization_id', organizationId)
+    .eq('gateway_type', 'stripe')
+    .eq('is_enabled', true)
+    .single();
+
+  if (data) {
+    return {
+      secretKey: data.is_live_mode 
+        ? data.live_secret_key 
+        : data.test_secret_key,
+      isLiveMode: data.is_live_mode,
+    };
+  }
+  
+  // Fallback to environment variable
+  return {
+    secretKey: Deno.env.get('STRIPE_SECRET_KEY'),
+    isLiveMode: true,
+  };
+}</code></pre>
+
+            <h2>Subscription Plans</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Plan</th><th>Price</th><th>Max Locations</th><th>Features</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Starter</td><td>$29/mo</td><td>5</td><td>Basic analytics, email support</td></tr>
+                <tr><td>Professional</td><td>$79/mo</td><td>25</td><td>Advanced analytics, priority support</td></tr>
+                <tr><td>Enterprise</td><td>$199/mo</td><td>100</td><td>Custom features, dedicated support</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Security Considerations</h2>
+            <ul class="feature-list">
+              <li><strong>Credentials Storage:</strong> All API keys stored encrypted in database</li>
+              <li><strong>Webhook Verification:</strong> Signature verification for Stripe and Coinbase webhooks</li>
+              <li><strong>Service Role Key:</strong> Edge functions use service role to access credentials</li>
+              <li><strong>RLS Policies:</strong> Only admins can read/write payment gateway settings</li>
+              <li><strong>No Client Exposure:</strong> Secret keys never sent to frontend</li>
+            </ul>
+          </section>
+
+          <!-- Storage Section -->
+          <section id="storage" class="doc-section">
+            <h1>Storage</h1>
+            
+            <h2>Storage Buckets</h2>
+            
+            <h3>location-photos</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Property</th><th>Value</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Name</td><td><code>location-photos</code></td></tr>
+                <tr><td>Public</td><td>Yes</td></tr>
+                <tr><td>Max File Size</td><td>10MB (recommended)</td></tr>
+                <tr><td>Allowed Types</td><td>image/jpeg, image/png, image/webp</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Upload Implementation</h2>
+            <pre><code class="language-typescript">const { uploadPhoto, isUploading, progress } = useLocationPhotoUpload();
+
+await uploadPhoto({
+  locationId,
+  file,
+  caption: 'Store front',
+});</code></pre>
+
+            <h2>Storage Operations</h2>
+            <pre><code class="language-typescript">// Upload file
+const { data, error } = await supabase.storage
+  .from('location-photos')
+  .upload(`${locationId}/${fileName}`, file);
+
+// Get public URL
+const { data } = supabase.storage
+  .from('location-photos')
+  .getPublicUrl(filePath);
+
+// Delete file
+const { error } = await supabase.storage
+  .from('location-photos')
+  .remove([filePath]);</code></pre>
+          </section>
+
+          <!-- Security Section -->
+          <section id="security" class="doc-section">
+            <h1>Security</h1>
+            
+            <h2>Security Architecture</h2>
+            <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    CLIENT APPLICATION                        │
+│           Input Validation (Zod schemas)                     │
+└───────────────────────────┬─────────────────────────────────┘
+                            │ HTTPS
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    AUTHENTICATION                            │
+│    JWT Tokens  │  Session Management  │  Auto-Expire         │
+└───────────────────────────┬─────────────────────────────────┘
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  ROW LEVEL SECURITY (RLS)                    │
+│   Per-Table Policies  │  Role Checks  │  Org Isolation       │
+└───────────────────────────┬─────────────────────────────────┘
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     DATABASE                                 │
+│    Constraints  │  Triggers  │  Encrypted at Rest            │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+
+            <h2>Row Level Security (RLS)</h2>
+            <pre><code class="language-sql">-- Pattern: Check user owns the record
+CREATE POLICY "Users can view own data"
+ON table_name FOR SELECT
+USING (auth.uid() = user_id);
+
+-- Pattern: Check user belongs to organization
+CREATE POLICY "Org members can view"
+ON table_name FOR SELECT
+USING (user_belongs_to_org(auth.uid(), organization_id));
+
+-- Pattern: Check user has role
+CREATE POLICY "Admins only"
+ON table_name FOR DELETE
+USING (has_role(auth.uid(), 'admin'));</code></pre>
+
+            <h2>Input Validation</h2>
+            <pre><code class="language-typescript">import { z } from 'zod';
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, 'Required').max(100),
+  email: z.string().trim().email('Invalid email'),
+  message: z.string().trim().min(10).max(5000),
+});</code></pre>
+
+            <h2>Security Checklist</h2>
+            <ul class="feature-list">
+              <li>✓ Input validation with Zod schemas</li>
+              <li>✓ RLS policies for all tables</li>
+              <li>✓ Auth checks in edge functions</li>
+              <li>✓ No hardcoded secrets</li>
+              <li>✓ Proper error handling</li>
+            </ul>
+          </section>
+
+          <!-- Store Locator Section -->
+          <section id="store-locator" class="doc-section">
+            <h1>Store Locator Feature</h1>
+            
+            <h2>Components</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Component</th><th>File</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>StoreLocator</td><td><code>locator/StoreLocator.tsx</code></td><td>Main container</td></tr>
+                <tr><td>GoogleMapView</td><td><code>locator/GoogleMapView.tsx</code></td><td>Map display</td></tr>
+                <tr><td>SearchAutocomplete</td><td><code>locator/SearchAutocomplete.tsx</code></td><td>Location search</td></tr>
+                <tr><td>LocationCard</td><td><code>locator/LocationCard.tsx</code></td><td>Result cards</td></tr>
+                <tr><td>LocationInfoWindow</td><td><code>locator/LocationInfoWindow.tsx</code></td><td>Map popups</td></tr>
+              </tbody>
+            </table>
+
+            <h2>User Flow</h2>
+            <pre><code>┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  Land on     │────▶│  Allow       │────▶│  See Nearby  │
+│  /locator    │     │  Geolocation │     │  Locations   │
+└──────────────┘     └──────────────┘     └──────────────┘
+       │                                          │
+       ▼                                          ▼
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  Search by   │────▶│  Map Centers │────▶│  Click       │
+│  Address     │     │  on Results  │     │  Marker      │
+└──────────────┘     └──────────────┘     └──────────────┘</code></pre>
+
+            <h2>Distance Calculation</h2>
+            <pre><code class="language-typescript">export function calculateDistance(
+  lat1: number, lng1: number,
+  lat2: number, lng2: number
+): number {
+  const R = 3959; // Earth's radius in miles
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLng/2) * Math.sin(dLng/2);
+  
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}</code></pre>
+          </section>
+
+          <!-- Reviews Section -->
+          <section id="reviews" class="doc-section">
+            <h1>Reviews System</h1>
+            
+            <h2>Data Model</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Table</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>reviews</td><td>User reviews with rating, title, content</td></tr>
+                <tr><td>review_helpfuls</td><td>"Helpful" votes on reviews</td></tr>
+                <tr><td>review_reports</td><td>Reports/flags on reviews</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Review Form</h2>
+            <pre><code class="language-tsx">&lt;ReviewForm&gt;
+  &lt;StarRating value={rating} onChange={setRating} /&gt;
+  &lt;Input placeholder="Title (optional)" /&gt;
+  &lt;Textarea placeholder="Share your experience..." /&gt;
+  &lt;Button type="submit"&gt;Submit Review&lt;/Button&gt;
+&lt;/ReviewForm&gt;</code></pre>
+
+            <h2>Moderation Flow</h2>
+            <pre><code>User Reports Review → Admin Reviews → Dismiss or Remove</code></pre>
+
+            <h2>RLS Policies</h2>
+            <pre><code class="language-sql">-- Anyone can view reviews for active locations
+CREATE POLICY "Anyone can view reviews"
+ON reviews FOR SELECT
+USING (EXISTS (
+  SELECT 1 FROM locations
+  WHERE locations.id = reviews.location_id
+  AND locations.is_active = true
+));
+
+-- Users can only create their own reviews
+CREATE POLICY "Users can create their own reviews"
+ON reviews FOR INSERT
+WITH CHECK (auth.uid() = user_id);</code></pre>
+          </section>
+
+          <!-- Dashboard Section -->
+          <section id="dashboard" class="doc-section">
+            <h1>Admin Dashboard</h1>
+            
+            <h2>Dashboard Sections</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Section</th><th>Route</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Overview</td><td><code>/dashboard</code></td><td>Quick stats and activity</td></tr>
+                <tr><td>Locations</td><td><code>/dashboard/locations</code></td><td>Location CRUD</td></tr>
+                <tr><td>Submissions</td><td><code>/dashboard/submissions</code></td><td>Review registrations</td></tr>
+                <tr><td>Reported Reviews</td><td><code>/dashboard/reported-reviews</code></td><td>Content moderation</td></tr>
+                <tr><td>Analytics</td><td><code>/dashboard/analytics</code></td><td>Performance metrics</td></tr>
+                <tr><td>Team</td><td><code>/dashboard/team</code></td><td>User administration</td></tr>
+                <tr><td>Settings</td><td><code>/dashboard/settings</code></td><td>Configuration</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Access Control</h2>
+            <ul class="feature-list">
+              <li>Authenticated user required</li>
+              <li>User assigned to organization via <code>user_roles</code></li>
+              <li>Role of <code>admin</code> or <code>staff</code></li>
+            </ul>
+
+            <h2>Role-Based UI</h2>
+            <pre><code class="language-tsx">function LocationActions({ location }) {
+  const { isAdmin } = useAuthStore();
+
+  return (
+    &lt;div&gt;
+      &lt;Button&gt;Edit&lt;/Button&gt;
+      {isAdmin && (
+        &lt;Button variant="destructive"&gt;Delete&lt;/Button&gt;
+      )}
+    &lt;/div&gt;
+  );
+}</code></pre>
+          </section>
+
+          <!-- Submissions Section -->
+          <section id="submissions" class="doc-section">
+            <h1>Store Submissions</h1>
+            
+            <h2>Submission Flow</h2>
+            <pre><code>Public Submits Form → Address Geocoded → Admin Reviews → Approve/Reject
+                                                              │
+                                                              ▼
+                                              Approved: Location Published
+                                              Rejected: Email Notification</code></pre>
+
+            <h2>Submission Form Fields</h2>
+            <ul class="feature-list">
+              <li>Business name</li>
+              <li>Contact information (name, email, phone)</li>
+              <li>Address with Google Places autocomplete</li>
+              <li>Category and services</li>
+              <li>Website URL</li>
+              <li>Additional notes</li>
+            </ul>
+
+            <h2>Admin Review</h2>
+            <pre><code class="language-tsx">function SubmissionReview({ submission }) {
+  const { mutate: approve } = useApproveSubmission();
+  const { mutate: reject } = useRejectSubmission();
+
+  return (
+    &lt;Card&gt;
+      &lt;CardContent&gt;
+        &lt;p&gt;{submission.business_name}&lt;/p&gt;
+        &lt;p&gt;{submission.address}&lt;/p&gt;
+      &lt;/CardContent&gt;
+      &lt;CardFooter&gt;
+        &lt;Button onClick={() =&gt; approve(submission.id)}&gt;Approve&lt;/Button&gt;
+        &lt;Button variant="destructive" onClick={() =&gt; reject(submission.id)}&gt;
+          Reject
+        &lt;/Button&gt;
+      &lt;/CardFooter&gt;
+    &lt;/Card&gt;
+  );
+}</code></pre>
+          </section>
+
+          <!-- Geolocation Section -->
+          <section id="geolocation" class="doc-section">
+            <h1>Geolocation & Near Me</h1>
+            
+            <h2>Overview</h2>
+            <p>The geolocation system enables location-based features including "Near Me" search, distance calculations, and proximity-based sorting.</p>
+
+            <h2>useGeolocation Hook</h2>
+            <pre><code class="language-typescript">const {
+  position,     // { lat: number, lng: number } | null
+  error,        // GeolocationPositionError | null
+  isLoading,    // boolean
+  isSupported,  // boolean
+  refresh       // () => void
+} = useGeolocation();
+
+// Example: Check if geolocation is available
+if (!isSupported) {
+  return &lt;p&gt;Geolocation not supported&lt;/p&gt;;
+}
+
+// Example: Display user's coordinates
+if (position) {
+  console.log(`Lat: ${position.lat}, Lng: ${position.lng}`);
+}</code></pre>
+
+            <h2>Near Me Feature</h2>
+            <pre><code>┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  User clicks    │────▶│  Browser prompts│────▶│  Filter by      │
+│  "Near Me"      │     │  for permission │     │  radius         │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+                                                       │
+                                                       ▼
+                              ┌─────────────────────────────────────┐
+                              │  Display radius circle on map       │
+                              │  + edge label with count            │
+                              └─────────────────────────────────────┘</code></pre>
+
+            <h2>Radius Visualization</h2>
+            <p>When "Near Me" is active, a visual circle is rendered on the map showing the search radius. A custom overlay label displays the radius distance and matching location count.</p>
+            <pre><code class="language-tsx">// Radius circle component
+&lt;Circle
+  center={userPosition}
+  radius={radiusMiles * 1609.34}  // Convert to meters
+  options={{
+    strokeColor: '#4f46e5',
+    fillColor: '#4f46e5',
+    fillOpacity: 0.1,
+  }}
+/&gt;</code></pre>
+
+            <h2>Distance Calculation</h2>
+            <p>Uses Haversine formula (Earth radius: 3958.8 miles):</p>
+            <pre><code class="language-typescript">// src/lib/distance.ts
+export function calculateDistance(
+  lat1: number, lng1: number,
+  lat2: number, lng2: number
+): number {
+  const R = 3958.8; // Earth radius in miles
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  
+  const a = Math.sin(dLat/2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLng/2) ** 2;
+  
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}</code></pre>
+
+            <h2>Sorting by Distance</h2>
+            <pre><code class="language-typescript">const sortedLocations = locations
+  .map(loc => ({
+    ...loc,
+    distance: calculateDistance(
+      userLat, userLng, loc.lat, loc.lng
+    )
+  }))
+  .sort((a, b) => a.distance - b.distance);</code></pre>
+          </section>
+
+          <!-- Directions Section -->
+          <section id="directions" class="doc-section">
+            <h1>Directions Integration</h1>
+            
+            <h2>Overview</h2>
+            <p>Directions functionality provides both external Google Maps links and in-app route visualization.</p>
+
+            <h2>Travel Modes</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Mode</th><th>Parameter</th><th>Icon</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Driving</td><td><code>driving</code></td><td>🚗 Car</td></tr>
+                <tr><td>Walking</td><td><code>walking</code></td><td>🚶 Person</td></tr>
+                <tr><td>Transit</td><td><code>transit</code></td><td>🚌 Bus</td></tr>
+                <tr><td>Bicycling</td><td><code>bicycling</code></td><td>🚴 Bicycle</td></tr>
+              </tbody>
+            </table>
+
+            <h2>External Directions Link</h2>
+            <pre><code class="language-typescript">function getDirectionsUrl(
+  destination: { lat: number; lng: number },
+  origin?: { lat: number; lng: number },
+  travelMode: string = 'driving'
+): string {
+  const destParam = `${destination.lat},${destination.lng}`;
+  const originParam = origin 
+    ? `&origin=${origin.lat},${origin.lng}` 
+    : '';
+  
+  return `https://www.google.com/maps/dir/?api=1&destination=${destParam}${originParam}&travelmode=${travelMode}`;
+}</code></pre>
+
+            <h2>In-App Directions</h2>
+            <p>The <code>DirectionsRenderer</code> component displays the route directly on the embedded map.</p>
+            <pre><code class="language-tsx">// locator/DirectionsRenderer.tsx
+&lt;DirectionsRenderer
+  origin={userPosition}
+  destination={{ lat: location.lat, lng: location.lng }}
+  travelMode="DRIVING"
+/&gt;</code></pre>
+
+            <h2>User Flow</h2>
+            <pre><code>Location Card/Info Window
+    │
+    ├── Click "Directions" dropdown
+    │       │
+    │       ├── Select travel mode
+    │       │
+    │       └── Opens Google Maps in new tab
+    │
+    └── Location Detail Page
+            │
+            └── Embedded map shows route
+                from user → destination</code></pre>
+          </section>
+
+          <!-- Favorites Section -->
+          <section id="favorites" class="doc-section">
+            <h1>Favorites System</h1>
+            
+            <h2>Overview</h2>
+            <p>Authenticated users can save locations to their favorites for quick access.</p>
+
+            <h2>Database Schema</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>user_id</td><td>uuid</td><td>Reference to auth.users</td></tr>
+                <tr><td>location_id</td><td>uuid</td><td>Foreign key to locations</td></tr>
+                <tr><td>created_at</td><td>timestamptz</td><td>When favorited</td></tr>
+              </tbody>
+            </table>
+
+            <h2>useFavorites Hook</h2>
+            <pre><code class="language-typescript">const {
+  favorites,        // string[] - location IDs
+  isFavorite,       // (id: string) => boolean
+  toggleFavorite,   // (id: string) => void
+  isLoading,
+} = useFavorites();
+
+// Check if location is favorited
+if (isFavorite(locationId)) {
+  // Show filled heart icon
+}
+
+// Toggle favorite status
+&lt;Button onClick={() => toggleFavorite(locationId)}&gt;
+  {isFavorite(locationId) ? &lt;HeartFilled /&gt; : &lt;HeartOutline /&gt;}
+&lt;/Button&gt;</code></pre>
+
+            <h2>Favorites Page</h2>
+            <p>Route: <code>/favorites</code></p>
+            <ul class="feature-list">
+              <li>Grid of saved locations</li>
+              <li>Distance from current position (if geolocation enabled)</li>
+              <li>Quick actions: View details, Get directions, Remove</li>
+              <li>Empty state with CTA to explore locator</li>
+            </ul>
+
+            <h2>RLS Policy</h2>
+            <pre><code class="language-sql">-- Users can only see their own favorites
+CREATE POLICY "Users can view own favorites"
+ON favorites FOR SELECT
+USING (auth.uid() = user_id);
+
+-- Users can only add their own favorites
+CREATE POLICY "Users can add own favorites"
+ON favorites FOR INSERT
+WITH CHECK (auth.uid() = user_id);
+
+-- Users can only delete their own favorites
+CREATE POLICY "Users can delete own favorites"
+ON favorites FOR DELETE
+USING (auth.uid() = user_id);</code></pre>
+          </section>
+
+          <!-- Photos Section -->
+          <section id="photos" class="doc-section">
+            <h1>Photo Gallery</h1>
+            
+            <h2>Overview</h2>
+            <p>Location photos are managed through a dedicated storage bucket with admin upload capabilities.</p>
+
+            <h2>Storage Configuration</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Property</th><th>Value</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Bucket Name</td><td><code>location-photos</code></td></tr>
+                <tr><td>Public Access</td><td>Yes (read-only)</td></tr>
+                <tr><td>Max File Size</td><td>10MB</td></tr>
+                <tr><td>Allowed Types</td><td>image/jpeg, image/png, image/webp</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Database Schema</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>location_id</td><td>uuid</td><td>Foreign key to locations</td></tr>
+                <tr><td>url</td><td>text</td><td>Public storage URL</td></tr>
+                <tr><td>caption</td><td>text</td><td>Optional description</td></tr>
+                <tr><td>display_order</td><td>integer</td><td>Sort order</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Upload Hook</h2>
+            <pre><code class="language-typescript">const {
+  uploadPhoto,
+  isUploading,
+  progress,
+  error,
+} = useLocationPhotoUpload();
+
+// Upload a photo
+await uploadPhoto({
+  locationId: 'uuid',
+  file: imageFile,
+  caption: 'Store front entrance',
+});
+
+// The hook handles:
+// 1. Upload to storage bucket
+// 2. Create location_photos record
+// 3. Invalidate queries</code></pre>
+
+            <h2>Gallery Component</h2>
+            <pre><code class="language-tsx">&lt;LocationPhotoGallery locationId={locationId}&gt;
+  {/* Displays:
+    - Thumbnail grid
+    - Lightbox viewer
+    - Navigation arrows
+    - Captions
+  */}
+&lt;/LocationPhotoGallery&gt;</code></pre>
+
+            <h2>Admin Photo Manager</h2>
+            <pre><code class="language-tsx">&lt;LocationPhotoManager locationId={locationId}&gt;
+  {/* Provides:
+    - Drag-and-drop upload
+    - Reorder photos
+    - Edit captions
+    - Delete photos
+  */}
+&lt;/LocationPhotoManager&gt;</code></pre>
+          </section>
+
+          <!-- Notifications Section -->
+          <section id="notifications" class="doc-section">
+            <h1>Notifications System</h1>
+            
+            <h2>Overview</h2>
+            <p>The notification system provides real-time alerts for admin users about important events like new submissions and reported reviews.</p>
+
+            <h2>Notification Types</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Type</th><th>Trigger</th><th>Priority</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>New Submission</td><td>Public store registration</td><td>Medium</td></tr>
+                <tr><td>Review Reported</td><td>User flags review</td><td>High</td></tr>
+                <tr><td>Contact Message</td><td>Contact form submission</td><td>Low</td></tr>
+              </tbody>
+            </table>
+
+            <h2>useNotifications Hook</h2>
+            <pre><code class="language-typescript">const {
+  notifications,    // Notification[]
+  unreadCount,      // number
+  markAsRead,       // (id: string) => void
+  markAllAsRead,    // () => void
+  isLoading,
+} = useNotifications();</code></pre>
+
+            <h2>Real-time Updates</h2>
+            <pre><code class="language-typescript">// useNotificationsRealtime.ts
+useEffect(() => {
+  const channel = supabase
+    .channel('notifications')
+    .on('postgres_changes', {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'store_submissions',
+    }, handleNewSubmission)
+    .subscribe();
+
+  return () => { channel.unsubscribe(); };
+}, []);</code></pre>
+
+            <h2>Sound Preferences</h2>
+            <pre><code class="language-typescript">const { soundEnabled, toggleSound } = useSoundPreference();
+
+// Play notification sound
+if (soundEnabled && newNotification) {
+  playNotificationSound();
+}</code></pre>
+
+            <h2>Notification Panel</h2>
+            <p>The <code>NotificationsPanel</code> component displays in the dashboard header with:</p>
+            <ul class="feature-list">
+              <li>Bell icon with unread badge</li>
+              <li>Dropdown list of recent notifications</li>
+              <li>Quick actions (view, dismiss)</li>
+              <li>Link to full notification center</li>
+            </ul>
+          </section>
+
+          <!-- Store Import Section -->
+          <section id="store-import" class="doc-section">
+            <h1>Store Import</h1>
+            
+            <h2>Overview</h2>
+            <p>Administrators can bulk import store locations by scraping retail chain websites using AI-powered extraction.</p>
+
+            <h2>Architecture</h2>
+            <pre><code>┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  Admin enters   │────▶│  Edge Function  │────▶│   Firecrawl     │
+│  website URL    │     │  orchestrates   │     │   crawls pages  │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+                                                       │
+                                                       ▼
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  Locations      │◀────│  Geocode        │◀────│  Gemini AI      │
+│  saved to DB    │     │  addresses      │     │  extracts data  │
+└─────────────────┘     └─────────────────┘     └─────────────────┘</code></pre>
+
+            <h2>Server-Sent Events</h2>
+            <p>Progress is streamed in real-time via SSE:</p>
+            <pre><code class="language-typescript">// Progress events
+interface ScrapeProgress {
+  stage: 'mapping' | 'scraping' | 'extracting' | 'geocoding' | 'complete';
+  progress: number;  // 0-100
+  message: string;
+  count?: number;
+}</code></pre>
+
+            <h2>Extraction Model</h2>
+            <p>Uses <code>google/gemini-3-flash</code> for structured data extraction:</p>
+            <pre><code class="language-typescript">const extractionPrompt = `
+Extract store locations from this content.
+Return JSON array with:
+- name: string
+- address: string
+- city: string
+- state: string
+- zip_code: string
+- phone: string
+- website: string (optional)
+`;</code></pre>
+
+            <h2>Batch Geocoding</h2>
+            <p>Addresses are geocoded with rate limiting (500ms delay) to respect API limits:</p>
+            <pre><code class="language-typescript">for (const location of locations) {
+  const coords = await geocodeAddress(location.address);
+  location.lat = coords.lat;
+  location.lng = coords.lng;
+  await delay(500);  // Rate limit protection
+}</code></pre>
+
+            <h2>Import Dialog</h2>
+            <p>The <code>StoreImportDialog</code> component provides:</p>
+            <ul class="feature-list">
+              <li>URL input with validation</li>
+              <li>Progress indicator with stage labels</li>
+              <li>Preview of extracted locations</li>
+              <li>Confirmation before database insert</li>
+              <li>Error handling with retry option</li>
+            </ul>
+          </section>
+
+          <!-- Contact Messages Section -->
+          <section id="contact" class="doc-section">
+            <h1>Contact Messages</h1>
+            
+            <h2>Overview</h2>
+            <p>Public contact form with admin management interface and email notifications.</p>
+
+            <h2>Database Schema</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>name</td><td>text</td><td>Sender name</td></tr>
+                <tr><td>email</td><td>text</td><td>Sender email</td></tr>
+                <tr><td>subject</td><td>text</td><td>Message subject</td></tr>
+                <tr><td>message</td><td>text</td><td>Message content</td></tr>
+                <tr><td>status</td><td>text</td><td>unread, read, archived</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Contact Form</h2>
+            <p>Route: <code>/contact</code></p>
+            <pre><code class="language-tsx">const contactSchema = z.object({
+  name: z.string().min(1).max(100),
+  email: z.string().email(),
+  subject: z.string().min(1).max(200),
+  message: z.string().min(10).max(5000),
+});
+
+// On submit:
+// 1. Validate with Zod
+// 2. Insert to contact_messages
+// 3. Trigger send-contact-notification Edge Function</code></pre>
+
+            <h2>Email Notifications</h2>
+            <p>The <code>send-contact-notification</code> Edge Function:</p>
+            <ul class="feature-list">
+              <li>Sends admin notification via Resend</li>
+              <li>Sends confirmation to submitter</li>
+              <li>Uses HTML email templates</li>
+            </ul>
+
+            <h2>Admin Interface</h2>
+            <p>Route: <code>/dashboard/contact</code></p>
+            <ul class="feature-list">
+              <li>List of messages with status badges</li>
+              <li>Mark as read/unread</li>
+              <li>Archive messages</li>
+              <li>Delete messages</li>
+              <li>Reply via external email client</li>
+            </ul>
+          </section>
+
+          <!-- Store Zone Management Section -->
+          <section id="territories" class="doc-section">
+            <h1>Store Zone Management</h1>
+            
+            <p class="lead">Comprehensive store zone management system for visualizing coverage areas, detecting overlaps, analyzing demand patterns, and simulating expansion scenarios with AI-powered optimization.</p>
+
+            <h2>Overview</h2>
+            <div class="info-cards">
+              <div class="info-card">
+                <div class="info-icon">🗺️</div>
+                <h3>Coverage Zones</h3>
+                <p>Define service areas using polygons, radius-based circles, or zip code boundaries.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">🔥</div>
+                <h3>Demand Heatmaps</h3>
+                <p>Visualize service request density with time-based filtering and demand type analysis.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">🧠</div>
+                <h3>AI Coverage Analysis</h3>
+                <p>Identify market gaps and get AI-powered location recommendations.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">🔮</div>
+                <h3>What-If Simulation</h3>
+                <p>Project coverage improvements for hypothetical new locations.</p>
+              </div>
+            </div>
+
+            <h2>Database Schema</h2>
+            
+            <h3>territories</h3>
+            <p>Stores store zone definitions with support for multiple geometry types.</p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>organization_id</td><td>uuid</td><td>Multi-tenant isolation</td></tr>
+                <tr><td>name</td><td>text</td><td>Store zone display name</td></tr>
+                <tr><td>description</td><td>text</td><td>Optional description</td></tr>
+                <tr><td>color</td><td>text</td><td>Hex color for map display</td></tr>
+                <tr><td>territory_type</td><td>text</td><td>Zone type: polygon, radius, or zipcode</td></tr>
+                <tr><td>polygon_coordinates</td><td>jsonb</td><td>Array of {lat, lng} for polygons</td></tr>
+                <tr><td>center_lat</td><td>float8</td><td>Center latitude for radius type</td></tr>
+                <tr><td>center_lng</td><td>float8</td><td>Center longitude for radius type</td></tr>
+                <tr><td>radius_miles</td><td>float8</td><td>Radius in miles for radius type</td></tr>
+                <tr><td>zip_codes</td><td>text[]</td><td>Array of zip codes for zipcode type</td></tr>
+                <tr><td>assigned_team_id</td><td>uuid</td><td>Team assignment (optional)</td></tr>
+                <tr><td>assigned_user_id</td><td>uuid</td><td>Individual assignment (optional)</td></tr>
+                <tr><td>is_active</td><td>boolean</td><td>Active status</td></tr>
+                <tr><td>priority</td><td>integer</td><td>Priority for overlap resolution</td></tr>
+              </tbody>
+            </table>
+
+            <h3>territory_demand</h3>
+            <p>Tracks service demand for heatmap visualization and coverage analysis.</p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+                <tr><td>organization_id</td><td>uuid</td><td>Multi-tenant isolation</td></tr>
+                <tr><td>lat</td><td>float8</td><td>Demand point latitude</td></tr>
+                <tr><td>lng</td><td>float8</td><td>Demand point longitude</td></tr>
+                <tr><td>demand_weight</td><td>integer</td><td>Weight/intensity (1-5)</td></tr>
+                <tr><td>demand_type</td><td>text</td><td>service_request, inquiry, complaint, order</td></tr>
+                <tr><td>timestamp</td><td>timestamptz</td><td>When demand occurred</td></tr>
+                <tr><td>metadata</td><td>jsonb</td><td>Additional context data</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Zone Types</h2>
+            
+            <h3>Polygon Zones</h3>
+            <p>Free-form shapes drawn on the map using Google Maps Drawing Manager.</p>
+            <pre><code class="language-typescript">// Polygon coordinates stored as GeoJSON-compatible array
+interface PolygonStoreZone {
+  territory_type: 'polygon';
+  polygon_coordinates: Array<{ lat: number; lng: number }>;
+  // center_lat, center_lng, radius_miles, zip_codes are null
+}
+
+// Drawing Manager configuration
+const drawingManager = new google.maps.drawing.DrawingManager({
+  drawingMode: google.maps.drawing.OverlayType.POLYGON,
+  drawingControl: true,
+  polygonOptions: {
+    fillColor: zone.color,
+    fillOpacity: 0.3,
+    strokeColor: zone.color,
+    strokeWeight: 2,
+    editable: true,
+  },
+});</code></pre>
+
+            <h3>Radius Zones</h3>
+            <p>Circular zones defined by a center point and radius in miles.</p>
+            <pre><code class="language-typescript">interface RadiusStoreZone {
+  territory_type: 'radius';
+  center_lat: number;
+  center_lng: number;
+  radius_miles: number;
+  // polygon_coordinates, zip_codes are null
+}
+
+// Rendered as Google Maps Circle
+new google.maps.Circle({
+  center: { lat: zone.center_lat, lng: zone.center_lng },
+  radius: zone.radius_miles * 1609.34, // Convert miles to meters
+  fillColor: zone.color,
+  fillOpacity: 0.3,
+  strokeColor: zone.color,
+  strokeWeight: 2,
+});</code></pre>
+
+            <h3>Zip Code Store Zones</h3>
+            <p>Store zones defined by a list of zip codes.</p>
+            <pre><code class="language-typescript">interface ZipCodeStoreZone {
+  territory_type: 'zipcode';
+  zip_codes: string[];
+  // polygon_coordinates, center_lat, center_lng, radius_miles are null
+}</code></pre>
+
+            <h2>Store Zone Hooks</h2>
+            
+            <h3>useStoreZones</h3>
+            <p>Fetches all active store zones for the organization.</p>
+            <pre><code class="language-typescript">import { useStoreZones } from '@/hooks/useStoreZones';
+
+function StoreZoneList() {
+  const { data: storeZones, isLoading, error } = useStoreZones();
+  
+  return (
+    &lt;ul&gt;
+      {storeZones?.map(t =&gt; (
+        &lt;li key={t.id}&gt;{t.name} ({t.territory_type})&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+
+            <h3>useCreateStoreZone</h3>
+            <pre><code class="language-typescript">import { useCreateStoreZone } from '@/hooks/useStoreZones';
+
+const createStoreZone = useCreateStoreZone();
+
+// Create a radius-based store zone
+createStoreZone.mutate({
+  name: 'Downtown Service Area',
+  description: 'Primary service zone',
+  territory_type: 'radius',
+  center_lat: 40.7128,
+  center_lng: -74.0060,
+  radius_miles: 5,
+  color: '#4338ca',
+});</code></pre>
+
+            <h3>useStoreZoneDemand</h3>
+            <p>Fetches demand points for heatmap visualization with optional filtering.</p>
+            <pre><code class="language-typescript">import { useStoreZoneDemand, DemandFilters } from '@/hooks/useStoreZoneDemand';
+
+const filters: DemandFilters = {
+  timeRange: {
+    start: new Date('2024-01-01'),
+    end: new Date('2024-12-31'),
+  },
+  demandType: 'service_request',
+};
+
+const { data: demandPoints } = useStoreZoneDemand(filters);
+// Returns up to 5000 demand points matching filters</code></pre>
+
+            <h2>Demand Heatmaps</h2>
+            <p>Visualize service demand density using Google Maps HeatmapLayer.</p>
+            
+            <h3>Heatmap Configuration</h3>
+            <pre><code class="language-typescript">import { HeatmapLayer } from '@react-google-maps/api';
+
+function DemandHeatmap({ demandPoints }) {
+  const heatmapData = useMemo(() =&gt; 
+    demandPoints.map(p =&gt; ({
+      location: new google.maps.LatLng(p.lat, p.lng),
+      weight: p.demand_weight,
+    })),
+    [demandPoints]
+  );
+
+  return (
+    &lt;HeatmapLayer
+      data={heatmapData}
+      options={{
+        radius: 30,
+        opacity: 0.6,
+        gradient: [
+          'rgba(0, 255, 255, 0)',
+          'rgba(0, 255, 255, 1)',
+          'rgba(0, 191, 255, 1)',
+          'rgba(0, 127, 255, 1)',
+          'rgba(0, 63, 255, 1)',
+          'rgba(0, 0, 255, 1)',
+          'rgba(0, 0, 223, 1)',
+          'rgba(0, 0, 191, 1)',
+          'rgba(0, 0, 159, 1)',
+          'rgba(0, 0, 127, 1)',
+          'rgba(63, 0, 91, 1)',
+          'rgba(127, 0, 63, 1)',
+          'rgba(191, 0, 31, 1)',
+          'rgba(255, 0, 0, 1)',
+        ],
+      }}
+    /&gt;
+  );
+}</code></pre>
+
+            <h3>Time-Based Filtering</h3>
+            <pre><code class="language-typescript">// DemandHeatmapControls component provides:
+// - Date range picker (last 7 days, 30 days, 90 days, custom)
+// - Demand type filter (service_request, inquiry, complaint, order)
+// - Real-time heatmap updates as filters change
+
+const handleDateRangeChange = (range: 'week' | 'month' | 'quarter' | 'custom') =&gt; {
+  const end = new Date();
+  const start = new Date();
+  
+  switch (range) {
+    case 'week': start.setDate(end.getDate() - 7); break;
+    case 'month': start.setMonth(end.getMonth() - 1); break;
+    case 'quarter': start.setMonth(end.getMonth() - 3); break;
+  }
+  
+  setFilters({ timeRange: { start, end } });
+};</code></pre>
+
+            <h3>Demand Statistics</h3>
+            <pre><code class="language-typescript">import { useDemandStats } from '@/hooks/useStoreZoneDemand';
+
+const stats = useDemandStats(filters);
+// Returns:
+// {
+//   totalPoints: 1250,
+//   totalWeight: 3420,
+//   avgWeight: 2.74,
+//   byType: { service_request: 1500, inquiry: 800, complaint: 200, order: 920 },
+//   byDay: [{ date: '2024-01-15', weight: 45 }, ...]
+// }</code></pre>
+
+            <h2>AI Coverage Analysis</h2>
+            <p>Powered by Google Gemini for intelligent market gap detection and location recommendations.</p>
+
+            <h3>Edge Function: analyze-coverage</h3>
+            <pre><code class="language-typescript">// POST /functions/v1/analyze-coverage
+// Headers: Authorization: Bearer &lt;jwt&gt;
+
+// Request body (optional):
+{
+  "hypothetical_locations": [...],  // For what-if simulation
+  "simulation_mode": true
+}
+
+// Response:
+{
+  "success": true,
+  "analysis": {
+    "coverage_percentage": 72.5,
+    "gaps": [
+      {
+        "description": "Underserved area in northern region",
+        "severity": "high",
+        "approximate_location": { "lat": 40.85, "lng": -73.95, "area_name": "Upper Manhattan" },
+        "uncovered_demand_percentage": 15
+      }
+    ],
+    "suggested_locations": [
+      {
+        "name": "Proposed: Harlem Branch",
+        "lat": 40.8116,
+        "lng": -73.9465,
+        "reason": "High demand concentration with no current coverage",
+        "estimated_coverage_improvement": 8.5,
+        "priority": "high"
+      }
+    ],
+    "overlaps": [
+      {
+         "zones": ["Downtown", "Midtown"],
+         "description": "23% overlap between zones",
+         "recommendation": "Adjust Downtown boundary northward"
+      }
+    ],
+    "priority_actions": [
+      {
+        "action": "Open new location in Harlem",
+        "impact": "high",
+        "effort": "medium"
+      }
+    ],
+    "summary": "Current coverage is 72.5%. Three high-priority gaps identified..."
+  },
+  "metadata": {
+     "store_zones_count": 5,
+    "locations_count": 12,
+    "demand_points_count": 1250,
+    "analyzed_at": "2024-01-15T14:30:00Z"
+  }
+}</code></pre>
+
+            <h3>Using Coverage Analysis Hook</h3>
+            <pre><code class="language-typescript">import { useCoverageAnalysis } from '@/hooks/useCoverageAnalysis';
+
+function CoverageAnalysisPanel() {
+  const { analyze, isAnalyzing, analysis, metadata, reset } = useCoverageAnalysis();
+
+  return (
+    &lt;div&gt;
+      &lt;Button onClick={() =&gt; analyze()} disabled={isAnalyzing}&gt;
+        {isAnalyzing ? 'Analyzing...' : 'Run AI Analysis'}
+      &lt;/Button&gt;
+
+      {analysis && (
+        &lt;&gt;
+          &lt;div&gt;Coverage: {analysis.coverage_percentage}%&lt;/div&gt;
+          &lt;div&gt;Gaps Found: {analysis.gaps.length}&lt;/div&gt;
+          &lt;div&gt;Suggestions: {analysis.suggested_locations.length}&lt;/div&gt;
+        &lt;/&gt;
+      )}
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+            <h2>What-If Simulation</h2>
+            <p>Project coverage improvements by placing hypothetical locations on the map.</p>
+
+            <h3>Simulation Workflow</h3>
+            <ol class="feature-list">
+              <li><strong>Place Locations:</strong> Click on map to add hypothetical branch locations</li>
+              <li><strong>Configure Radius:</strong> Set service coverage radius for each location</li>
+              <li><strong>Run Simulation:</strong> AI analyzes combined impact of all proposed locations</li>
+              <li><strong>Compare Scenarios:</strong> Save and compare multiple expansion plans</li>
+              <li><strong>Convert to Real:</strong> Promote hypothetical locations to actual store zones</li>
+            </ol>
+
+            <h3>Hypothetical Location Interface</h3>
+            <pre><code class="language-typescript">interface HypotheticalLocation {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  radius_miles: number;
+}
+
+// useWhatIfSimulation hook provides:
+const {
+  hypotheticalLocations,   // Current list of hypothetical locations
+  isPlacingLocation,       // True when in placement mode
+  simulationResult,        // Results after running simulation
+  isSimulating,            // Loading state
+  addLocation,             // Add new hypothetical location
+  removeLocation,          // Remove by ID
+  updateLocation,          // Update properties
+  startPlacing,            // Enter placement mode
+  cancelPlacing,           // Exit placement mode
+  clearAll,                // Remove all locations
+  runSimulation,           // Execute AI simulation
+  // Scenario management
+  savedScenarios,          // List of saved scenarios
+  saveScenario,            // Save current state
+  loadScenario,            // Load saved scenario
+  deleteScenario,          // Remove saved scenario
+  comparisonMode,          // Toggle comparison view
+  selectedScenarioIds,     // Selected for comparison
+  toggleScenarioSelection, // Add/remove from comparison
+} = useWhatIfSimulation();</code></pre>
+
+            <h3>Simulation Results</h3>
+            <pre><code class="language-typescript">interface SimulationResult {
+  original_coverage: number;    // Current coverage %
+  new_coverage: number;         // Projected coverage with new locations
+  improvement: number;          // Percentage point improvement
+  demand_captured: number;      // Additional demand points served
+  recommendation: string;       // AI-generated recommendation text
+}
+
+// Example result:
+{
+  original_coverage: 72.5,
+  new_coverage: 85.3,
+  improvement: 12.8,
+  demand_captured: 340,
+  recommendation: "Adding the proposed Harlem and Brooklyn locations would 
+                   significantly improve coverage. Prioritize Harlem for 
+                   maximum ROI given demand concentration."
+}</code></pre>
+
+            <h3>Scenario Comparison</h3>
+            <pre><code class="language-typescript">// Save current simulation as a named scenario
+saveScenario('Aggressive Expansion Plan');
+
+// Toggle comparison mode to view multiple scenarios side-by-side
+toggleComparisonMode();
+
+// Select scenarios for comparison
+toggleScenarioSelection(scenario1.id);
+toggleScenarioSelection(scenario2.id);
+
+// ScenarioComparisonPanel displays:
+// - Side-by-side coverage metrics
+// - "Best Scenario" badge on highest improvement
+// - Location count and demand captured
+// - Load/Delete actions</code></pre>
+
+            <h2>Overlap Detection</h2>
+            <p>Automatic detection of overlapping store zones with recommendations.</p>
+            
+            <h3>Radius Overlap Calculation</h3>
+            <pre><code class="language-typescript">import { checkStoreZoneOverlap, calculateDistance } from '@/hooks/useStoreZones';
+
+function checkRadiusOverlap(t1: StoreZone, t2: StoreZone): boolean {
+  if (t1.territory_type !== 'radius' || t2.territory_type !== 'radius') {
+    return false;
+  }
+  
+  // Calculate Haversine distance between centers
+  const distance = calculateDistance(
+    t1.center_lat!, t1.center_lng!,
+    t2.center_lat!, t2.center_lng!
+  );
+  
+  // Overlap if distance < sum of radii
+  const combinedRadius = (t1.radius_miles || 0) + (t2.radius_miles || 0);
+  return distance < combinedRadius;
+}
+
+// Haversine formula (from src/lib/distance.ts)
+function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 3958.8; // Earth's radius in miles
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}</code></pre>
+
+            <h3>Zip Code Overlap Detection</h3>
+            <pre><code class="language-typescript">function checkZipCodeOverlap(t1: StoreZone, t2: StoreZone): boolean {
+  if (t1.territory_type !== 'zipcode' || t2.territory_type !== 'zipcode') {
+    return false;
+  }
+  
+  const zips1 = new Set(t1.zip_codes || []);
+  const zips2 = t2.zip_codes || [];
+  
+  // Overlap if any zip code appears in both store zones
+  return zips2.some(zip =&gt; zips1.has(zip));
+}</code></pre>
+
+            <h2>Components</h2>
+            
+            <h3>StoreZoneManager</h3>
+            <p>Main container component for the store zone management interface.</p>
+            <pre><code class="language-typescript">// Located at: src/components/store-zone/StoreZoneManager.tsx
+// Uses side-panel layout for simultaneous map and form interaction
+
+&lt;StoreZoneManager&gt;
+   ├── StoreZoneList          // Sidebar list of store zones
+  ├── StoreZoneMapView       // Google Maps with zone overlays
+  ├── StoreZoneForm          // Create/edit store zone form
+  ├── DemandHeatmapControls  // Heatmap filter controls
+  ├── DemandHeatmapLayer     // Heatmap visualization
+  ├── CoverageAnalysisPanel  // AI analysis results
+  ├── WhatIfSimulation       // Hypothetical location tools
+  └── ScenarioComparisonPanel // Scenario comparison view
+&lt;/StoreZoneManager&gt;</code></pre>
+
+            <h3>StoreZoneMapView</h3>
+            <p>Google Maps component with store zone visualization and drawing tools.</p>
+            <pre><code class="language-typescript">// Uses @react-google-maps/api with visualization and drawing libraries
+&lt;LoadScript
+  googleMapsApiKey={apiKey}
+  libraries={['drawing', 'visualization', 'places']}
+&gt;
+  &lt;GoogleMap
+    mapContainerStyle={{ width: '100%', height: '600px' }}
+    center={defaultCenter}
+    zoom={11}
+  &gt;
+    {/* Render existing store zones */}
+    {storeZones.map(t =&gt; (
+      t.territory_type === 'radius' ? (
+        &lt;Circle key={t.id} center={{lat: t.center_lat, lng: t.center_lng}} ... /&gt;
+      ) : (
+        &lt;Polygon key={t.id} paths={t.polygon_coordinates} ... /&gt;
+      )
+    ))}
+    
+    {/* Heatmap layer */}
+    {showHeatmap && &lt;DemandHeatmapLayer demandPoints={demandPoints} /&gt;}
+    
+    {/* Hypothetical locations */}
+    {hypotheticalLocations.map(loc =&gt; (
+      &lt;Marker key={loc.id} position={{lat: loc.lat, lng: loc.lng}} ... /&gt;
+    ))}
+  &lt;/GoogleMap&gt;
+&lt;/LoadScript&gt;</code></pre>
+
+            <h2>RLS Policies</h2>
+             <pre><code class="language-sql">-- territories table (store zones)
+CREATE POLICY "Users can view store zones in their organization"
+  ON public.territories FOR SELECT
+  USING (organization_id IN (
+    SELECT organization_id FROM user_roles WHERE user_id = auth.uid()
+  ));
+
+CREATE POLICY "Admins can manage store zones"
+  ON public.territories FOR ALL
+  USING (
+    organization_id IN (
+      SELECT organization_id FROM user_roles 
+      WHERE user_id = auth.uid() AND role = 'admin'
+    )
+  );
+
+-- territory_demand table (store zone demand)
+CREATE POLICY "Users can view demand in their organization"
+  ON public.territory_demand FOR SELECT
+  USING (organization_id IN (
+    SELECT organization_id FROM user_roles WHERE user_id = auth.uid()
+  ));
+
+CREATE POLICY "Users can record demand in their organization"
+  ON public.territory_demand FOR INSERT
+  WITH CHECK (organization_id IN (
+    SELECT organization_id FROM user_roles WHERE user_id = auth.uid()
+  ));</code></pre>
+
+            <h2>Sample Data Generation</h2>
+            <pre><code class="language-typescript">import { useGenerateSampleDemand } from '@/hooks/useStoreZoneDemand';
+
+// Generate sample demand points for testing heatmaps
+const generateSample = useGenerateSampleDemand();
+
+// Creates 50 random demand points around NYC (default)
+generateSample.mutate(50);
+
+// Points include:
+// - Random lat/lng within 0.15° of center
+// - Random demand_weight 1-5
+// - Random demand_type from predefined list
+// - Random timestamp within last 30 days</code></pre>
+          </section>
+
+          <!-- Type Definitions Section -->
+          <section id="types" class="doc-section">
+            <h1>Type Definitions</h1>
+            
+            <h2>Core Types</h2>
+            <p>Located in <code>src/types/index.ts</code></p>
+
+            <h3>Location</h3>
+            <pre><code class="language-typescript">interface Location {
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+  lat: number;
+  lng: number;
+  category: LocationCategory;
+  phone: string;
+  email: string;
+  website?: string;
+  openingHours: OpeningHours;
+  services: string[];
+  isActive: boolean;
+  clientId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+type LocationCategory = 
+  | 'retail'
+  | 'warehouse'
+  | 'service-center'
+  | 'headquarters'
+  | 'branch';</code></pre>
+
+            <h3>Opening Hours</h3>
+            <pre><code class="language-typescript">interface OpeningHours {
+  monday: DayHours;
+  tuesday: DayHours;
+  wednesday: DayHours;
+  thursday: DayHours;
+  friday: DayHours;
+  saturday: DayHours;
+  sunday: DayHours;
+}
+
+interface DayHours {
+  isOpen: boolean;
+  open: string;   // "09:00"
+  close: string;  // "17:00"
+}</code></pre>
+
+            <h3>User & Roles</h3>
+            <pre><code class="language-typescript">interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+  clientId: string;
+  avatar?: string;
+  createdAt: Date;
+}
+
+type UserRole = 'admin' | 'staff';</code></pre>
+
+            <h3>Search & Filters</h3>
+            <pre><code class="language-typescript">interface SearchFilters {
+  query: string;
+  category: LocationCategory | 'all';
+  radius: number;
+  city: string;
+}
+
+interface MapViewport {
+  center: { lat: number; lng: number };
+  zoom: number;
+}</code></pre>
+
+            <h2>Database Types</h2>
+            <p>Auto-generated types in <code>src/integrations/supabase/types.ts</code></p>
+            <pre><code class="language-typescript">// Example: Using database types
+import { Tables } from '@/integrations/supabase/types';
+
+type LocationRow = Tables&lt;'locations'&gt;;
+type ReviewRow = Tables&lt;'reviews'&gt;;</code></pre>
+
+            <h2>Type Transformation</h2>
+            <p>Database rows use snake_case, app uses camelCase:</p>
+            <pre><code class="language-typescript">function transformLocation(row: LocationRow): Location {
+  return {
+    id: row.id,
+    name: row.name,
+    zipCode: row.zip_code,      // snake → camel
+    isActive: row.is_active,    // snake → camel
+    clientId: row.organization_id,
+    // ...
+  };
+}</code></pre>
+          </section>
+
+          <!-- Testing Section -->
+          <section id="testing" class="doc-section">
+            <h1>Testing</h1>
+            
+            <h2>Test Setup</h2>
+            <p>Tests are configured with Vitest and run via:</p>
+            <pre><code class="language-bash">npm run test        # Run all tests
+npm run test:watch  # Watch mode
+npm run test:ui     # Visual test runner</code></pre>
+
+            <h2>Configuration Files</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>File</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>vitest.config.ts</code></td><td>Test runner configuration</td></tr>
+                <tr><td><code>src/test/setup.ts</code></td><td>Global test setup, mocks</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Test Structure</h2>
+            <pre><code class="language-typescript">// src/test/example.test.ts
+import { describe, it, expect } from 'vitest';
+import { calculateDistance } from '@/lib/distance';
+
+describe('calculateDistance', () => {
+  it('calculates distance between two points', () => {
+    const distance = calculateDistance(
+      40.7128, -74.0060,  // NYC
+      34.0522, -118.2437  // LA
+    );
+    
+    expect(distance).toBeCloseTo(2451, 0);
+  });
+});</code></pre>
+
+            <h2>Testing Hooks</h2>
+            <pre><code class="language-typescript">import { renderHook, waitFor } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { usePublicLocations } from '@/hooks/useLocations';
+
+function wrapper({ children }) {
+  const queryClient = new QueryClient();
+  return (
+    &lt;QueryClientProvider client={queryClient}&gt;
+      {children}
+    &lt;/QueryClientProvider&gt;
+  );
+}
+
+it('fetches public locations', async () => {
+  const { result } = renderHook(() => usePublicLocations(), { wrapper });
+  
+  await waitFor(() => {
+    expect(result.current.isLoading).toBe(false);
+  });
+  
+  expect(result.current.data).toBeDefined();
+});</code></pre>
+
+            <h2>Component Testing</h2>
+            <pre><code class="language-typescript">import { render, screen } from '@testing-library/react';
+import { LocationCard } from '@/components/locator/LocationCard';
+
+it('displays location name', () => {
+  const location = {
+    id: '1',
+    name: 'Test Store',
+    // ...
+  };
+  
+  render(&lt;LocationCard location={location} /&gt;);
+  
+  expect(screen.getByText('Test Store')).toBeInTheDocument();
+});</code></pre>
+          </section>
+
+          <!-- Error Handling Section -->
+          <section id="error-handling" class="doc-section">
+            <h1>Error Handling</h1>
+            
+            <h2>Toast Notifications</h2>
+            <pre><code class="language-typescript">import { toast } from 'sonner';
+
+// Success
+toast.success('Location saved successfully');
+
+// Error
+toast.error('Failed to save location');
+
+// With description
+toast.success('Location saved', {
+  description: 'The location is now visible to users',
+});
+
+// Promise-based
+toast.promise(saveLocation(), {
+  loading: 'Saving...',
+  success: 'Location saved!',
+  error: 'Failed to save',
+});</code></pre>
+
+            <h2>TanStack Query Errors</h2>
+            <pre><code class="language-typescript">const { data, error, isError } = useQuery({
+  queryKey: ['locations'],
+  queryFn: fetchLocations,
+});
+
+if (isError) {
+  return &lt;ErrorMessage error={error} /&gt;;
+}
+
+// With error handling in mutation
+const mutation = useMutation({
+  mutationFn: createLocation,
+  onError: (error) => {
+    toast.error(error.message);
+    console.error('Create failed:', error);
+  },
+});</code></pre>
+
+            <h2>Form Validation Errors</h2>
+            <pre><code class="language-tsx">&lt;Form {...form}&gt;
+  &lt;FormField
+    control={form.control}
+    name="email"
+    render={({ field }) => (
+      &lt;FormItem&gt;
+        &lt;FormLabel&gt;Email&lt;/FormLabel&gt;
+        &lt;FormControl&gt;
+          &lt;Input {...field} /&gt;
+        &lt;/FormControl&gt;
+        &lt;FormMessage /&gt;  {/* Shows validation error */}
+      &lt;/FormItem&gt;
+    )}
+  /&gt;
+&lt;/Form&gt;</code></pre>
+
+            <h2>Error States in UI</h2>
+            <pre><code class="language-tsx">function LocationsList() {
+  const { data, isLoading, isError, error, refetch } = usePublicLocations();
+
+  if (isLoading) {
+    return &lt;Skeleton count={5} /&gt;;
+  }
+
+  if (isError) {
+    return (
+      &lt;Alert variant="destructive"&gt;
+        &lt;AlertTitle&gt;Error loading locations&lt;/AlertTitle&gt;
+        &lt;AlertDescription&gt;{error.message}&lt;/AlertDescription&gt;
+        &lt;Button onClick={() => refetch()}&gt;Retry&lt;/Button&gt;
+      &lt;/Alert&gt;
+    );
+  }
+
+  return &lt;LocationGrid locations={data} /&gt;;
+}</code></pre>
+
+            <h2>Edge Function Errors</h2>
+            <pre><code class="language-typescript">// In edge function
+return new Response(
+  JSON.stringify({ error: 'Invalid request' }),
+  { status: 400, headers: { 'Content-Type': 'application/json' } }
+);
+
+// Client handling
+const { data, error } = await supabase.functions.invoke('my-function');
+
+if (error) {
+  console.error('Function error:', error);
+  toast.error('Operation failed');
+}</code></pre>
+          </section>
+
+          <!-- Troubleshooting Section -->
+          <section id="troubleshooting" class="doc-section">
+            <h1>Troubleshooting</h1>
+            
+            <h2>Common Issues</h2>
+            
+            <h3>Maps Not Loading</h3>
+            <div class="callout warning">
+              <p><strong>Symptoms:</strong> Blank map area, "Loading..." spinner never stops</p>
+              <ul class="feature-list">
+                <li>Check <code>GOOGLE_MAPS_API_KEY</code> secret is configured</li>
+                <li>Verify API key has Maps JavaScript API, Places API, and Geocoding API enabled</li>
+                <li>Check browser console for API errors</li>
+                <li>Ensure key has appropriate domain restrictions</li>
+              </ul>
+            </div>
+
+            <h3>Authentication Issues</h3>
+            <div class="callout warning">
+              <p><strong>Symptoms:</strong> Can't log in, session expires immediately</p>
+              <ul class="feature-list">
+                <li>Verify auto-confirm email is enabled in auth settings</li>
+                <li>Check if user has entry in <code>user_roles</code> table</li>
+                <li>Clear browser storage and cookies</li>
+                <li>Check auth configuration in backend</li>
+              </ul>
+            </div>
+
+            <h3>RLS Policy Errors</h3>
+            <div class="callout warning">
+              <p><strong>Symptoms:</strong> "new row violates row-level security policy"</p>
+              <ul class="feature-list">
+                <li>Ensure <code>user_id</code> is set to <code>auth.uid()</code> in insert</li>
+                <li>Verify user is authenticated before mutation</li>
+                <li>Check policy conditions match your data</li>
+                <li>For org data, ensure user has valid <code>user_roles</code> entry</li>
+              </ul>
+            </div>
+
+            <h3>Missing Data</h3>
+            <div class="callout warning">
+              <p><strong>Symptoms:</strong> Data exists in DB but doesn't appear in UI</p>
+              <ul class="feature-list">
+                <li>Check <code>is_active</code> filter on queries</li>
+                <li>Verify RLS policies allow read access</li>
+                <li>Check query limits (default 1000 rows)</li>
+                <li>Invalidate query cache: <code>queryClient.invalidateQueries()</code></li>
+              </ul>
+            </div>
+
+            <h3>Slow Performance</h3>
+            <div class="callout warning">
+              <p><strong>Symptoms:</strong> Long load times, laggy interactions</p>
+              <ul class="feature-list">
+                <li>Check network tab for slow API calls</li>
+                <li>Verify indexes exist on frequently queried columns</li>
+                <li>Use React DevTools Profiler to find re-render issues</li>
+                <li>Check for N+1 query patterns in hooks</li>
+              </ul>
+            </div>
+
+            <h2>Debug Tools</h2>
+            <table class="data-table">
+              <thead>
+                <tr><th>Tool</th><th>Use For</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>React DevTools</td><td>Component state, re-renders</td></tr>
+                <tr><td>TanStack Query DevTools</td><td>Query cache, mutations</td></tr>
+                <tr><td>Network Tab</td><td>API calls, response data</td></tr>
+                <tr><td>Console</td><td>Errors, debug logs</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Useful Debug Patterns</h2>
+            <pre><code class="language-typescript">// Log query state
+const query = usePublicLocations();
+console.log('Query state:', {
+  isLoading: query.isLoading,
+  isError: query.isError,
+  dataLength: query.data?.length,
+});
+
+// Log auth state
+const { data: { user } } = await supabase.auth.getUser();
+console.log('Current user:', user?.id);
+
+// Test RLS policy
+const { data, error } = await supabase
+  .from('locations')
+  .select('*')
+  .limit(1);
+console.log('RLS test:', { data, error });</code></pre>
+
+            <h2>Getting Help</h2>
+            <ul class="feature-list">
+              <li>Check browser console for specific error messages</li>
+              <li>Review network requests for API errors</li>
+              <li>Search codebase for error message text</li>
+              <li>Isolate issue to frontend, backend, or database layer</li>
+            </ul>
+          </section>
+
+          <!-- Deployment Section -->
+          <section id="deployment" class="doc-section">
+            <h1>Deployment Guide</h1>
+            <p class="lead">This guide covers deploying the main LocatePro application and hosting this documentation site alongside it.</p>
+
+            <h2>Main Application Deployment</h2>
+            
+            <h3>Build Process</h3>
+            <pre><code class="language-bash"># Build the main application
+npm run build</code></pre>
+            <p>Creates an optimized build in the <code>dist/</code> directory with minified JavaScript, optimized CSS, and asset fingerprinting.</p>
+
+            <h3>Environment Variables</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Variable</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>VITE_SUPABASE_URL</code></td><td>Backend API URL</td></tr>
+                <tr><td><code>VITE_SUPABASE_PUBLISHABLE_KEY</code></td><td>Public API key</td></tr>
+                <tr><td><code>VITE_SUPABASE_PROJECT_ID</code></td><td>Project identifier</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Backend Secrets</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Secret</th><th>Used By</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>GOOGLE_MAPS_API_KEY</code></td><td>get-maps-api-key function</td></tr>
+                <tr><td><code>RESEND_API_KEY</code></td><td>Notification functions</td></tr>
+                <tr><td><code>FIRECRAWL_API_KEY</code></td><td>scrape-store-locations</td></tr>
+                <tr><td><code>GOOGLE_GEMINI_API_KEY</code></td><td>AI data extraction</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Publishing Environments</h3>
+            <table class="data-table">
+              <thead>
+                <tr><th>Environment</th><th>Purpose</th><th>Deploys</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Test</td><td>Development and testing</td><td>Automatically on save</td></tr>
+                <tr><td>Production</td><td>Live users</td><td>Manual publish required</td></tr>
+              </tbody>
+            </table>
+
+            <h2>Documentation Site Deployment</h2>
+            <p>The documentation site (<code>docs/</code> folder) is a standalone static site that can be hosted independently or alongside the main application.</p>
+
+            <h3>File Structure</h3>
+            <pre><code class="language-bash">docs/
+├── index.html    # Main documentation page
+├── style.css     # Documentation styles
+└── script.js     # Navigation and interactivity</code></pre>
+
+            <h3>Option 1: Local Development</h3>
+            <p>For local viewing during development:</p>
+            <pre><code class="language-bash"># Option A: Open directly in browser
+open docs/index.html
+
+# Option B: Use a simple static server
+npx serve docs
+
+# Option C: Use Python's built-in server
+cd docs && python -m http.server 8080
+
+# Option D: Use VS Code Live Server extension
+# Right-click docs/index.html → "Open with Live Server"</code></pre>
+
+            <h3>Option 2: Deploy to Subdirectory</h3>
+            <p>Host docs at <code>yourdomain.com/docs/</code> by copying the docs folder to your hosting:</p>
+            <pre><code class="language-bash"># Copy docs to the build output
+cp -r docs dist/docs
+
+# Your build structure becomes:
+dist/
+├── assets/
+├── index.html      # Main app
+├── docs/
+│   ├── index.html  # Documentation
+│   ├── style.css
+│   └── script.js</code></pre>
+
+            <h3>Option 3: Deploy to Separate Subdomain</h3>
+            <p>Host documentation on <code>docs.yourdomain.com</code>:</p>
+            <pre><code class="language-bash"># Deploy the docs folder as a separate static site
+# Works with any static hosting provider:
+# - Netlify: drag-and-drop the docs folder
+# - Vercel: vercel deploy docs
+# - GitHub Pages: push docs to gh-pages branch
+# - AWS S3: aws s3 sync docs s3://your-bucket</code></pre>
+
+            <h3>Option 4: GitHub Pages</h3>
+            <pre><code class="language-bash"># In your repository settings:
+# 1. Go to Settings → Pages
+# 2. Set Source to "Deploy from a branch"
+# 3. Select branch: main (or master)
+# 4. Select folder: /docs
+# 5. Save - your docs will be at:
+#    https://username.github.io/repository/</code></pre>
+
+            <h3>Option 5: Netlify Drop</h3>
+            <pre><code class="language-bash"># Simply drag the docs folder to:
+# https://app.netlify.com/drop
+# Instant deployment with free SSL!</code></pre>
+
+            <h3>Automated Build Script</h3>
+            <p>Add this to your <code>package.json</code> scripts for automated deployment:</p>
+            <pre><code class="language-json">{
+  "scripts": {
+    "build": "vite build",
+    "build:with-docs": "vite build && cp -r docs dist/docs",
+    "preview:docs": "npx serve docs -p 3001"
+  }
+}</code></pre>
+
+            <h3>Nginx Configuration</h3>
+            <p>If using Nginx, add this to serve docs from a subdirectory:</p>
+            <pre><code class="language-bash"># nginx.conf
+server {
+    listen 80;
+    server_name yourdomain.com;
+    
+    # Main application
+    location / {
+        root /var/www/dist;
+        try_files $uri $uri/ /index.html;
+    }
+    
+    # Documentation (static files)
+    location /docs {
+        alias /var/www/dist/docs;
+        index index.html;
+    }
+}</code></pre>
+
+            <h2>Pre-Deployment Checklist</h2>
+            <ul class="feature-list">
+              <li>✓ All secrets configured in backend</li>
+              <li>✓ RLS policies reviewed and tested</li>
+              <li>✓ Database migrations applied to production</li>
+              <li>✓ No console.log statements in production code</li>
+              <li>✓ Error tracking configured</li>
+              <li>✓ Performance tested with realistic data</li>
+              <li>✓ Documentation links updated if using custom domain</li>
+            </ul>
+
+            <h2>Performance Optimization</h2>
+            <ul class="feature-list">
+              <li>Code splitting via React.lazy()</li>
+              <li>Image lazy loading</li>
+              <li>Memoization with useMemo/useCallback</li>
+              <li>Query caching via TanStack Query staleTime</li>
+              <li>Asset fingerprinting for cache invalidation</li>
+            </ul>
+
+            <h2>Post-Deployment Verification</h2>
+            <ul class="feature-list">
+              <li>Verify all routes load correctly</li>
+              <li>Test authentication flow</li>
+              <li>Confirm API connections work</li>
+              <li>Check Google Maps loads properly</li>
+              <li>Test email notifications are sent</li>
+              <li>Verify documentation is accessible at configured URL</li>
+              <li>Check documentation dark/light theme toggle works</li>
+              <li>Test documentation search functionality</li>
+            </ul>
+
+            <div class="callout warning">
+              <h4>⚠️ Important Note</h4>
+              <p>The documentation site uses relative paths. If deploying to a subdirectory other than <code>/docs/</code>, ensure all asset paths in <code>index.html</code> are updated accordingly.</p>
+            </div>
+          </section>
+        </article>
+
+        <!-- Table of Contents -->
+        <aside class="toc" id="toc">
+          <h4>On this page</h4>
+          <nav id="tocNav">
+            <!-- Populated by JavaScript -->
+          </nav>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <!-- Prism.js Core and Languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

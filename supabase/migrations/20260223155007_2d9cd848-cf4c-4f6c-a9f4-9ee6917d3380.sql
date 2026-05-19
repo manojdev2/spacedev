@@ -1,0 +1,1 @@
+UPDATE system_config SET value = jsonb_set(value::jsonb, '{app_name}', '"LocatePro"'), updated_at = now() WHERE key = 'app_identity';

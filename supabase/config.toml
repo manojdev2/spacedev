@@ -1,0 +1,16 @@
+project_id = "icvuodcizesxzzskkqcl"
+
+[functions.send-invoice-email]
+verify_jwt = false
+
+[functions.create-paypal-checkout]
+verify_jwt = false
+
+[functions.capture-paypal-order]
+verify_jwt = false
+
+[functions.create-coinbase-checkout]
+verify_jwt = false
+
+[functions.coinbase-webhook]
+verify_jwt = false
