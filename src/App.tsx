@@ -38,6 +38,9 @@ import WidgetGeneratorPage from "./pages/dashboard/WidgetGeneratorPage";
 import AppointmentsPage from "./pages/dashboard/AppointmentsPage";
 import StoreZonesPage from "./pages/dashboard/StoreZonesPage";
 import InvoicesPage from "./pages/dashboard/InvoicesPage";
+import FleetDashboardPage from "./pages/dashboard/fleet/FleetDashboardPage";
+import FleetVehiclesPage from "./pages/dashboard/fleet/FleetVehiclesPage";
+import FleetRoutesPage from "./pages/dashboard/fleet/FleetRoutesPage";
 import EmbedWidget from "./pages/EmbedWidget";
 import NotFound from "./pages/NotFound";
 
@@ -97,6 +100,9 @@ const App = () => (
                   <Route path="widget" element={<WidgetGeneratorPage />} />
                   <Route path="appointments" element={<AppointmentsPage />} />
                   <Route path="invoices" element={<InvoicesPage />} />
+                  <Route path="fleet" element={<FleetDashboardPage />} />
+                  <Route path="fleet/vehicles" element={<FleetVehiclesPage />} />
+                  <Route path="fleet/routes" element={<FleetRoutesPage />} />
                 </Route>
                 
                 {/* Catch-all */}

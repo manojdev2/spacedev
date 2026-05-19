@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  LayoutDashboard, Settings, BarChart3, 
-  Users, LogOut, Menu, X, ChevronLeft, Bell, UserCircle, ClipboardList, Flag, MessageSquare, Code, CalendarCheck, Layers, MapPin
+import {
+  LayoutDashboard, Settings, BarChart3,
+  Users, LogOut, Menu, X, ChevronLeft, Bell, UserCircle, ClipboardList, Flag, MessageSquare, Code, CalendarCheck, Layers, MapPin, Truck, Route, Car
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -28,6 +28,9 @@ const navItems = [
   { icon: BarChart3, label: 'Analytics', href: '/dashboard/analytics', adminOnly: false },
   { icon: Code, label: 'Widget', href: '/dashboard/widget', adminOnly: true },
   { icon: Users, label: 'Team', href: '/dashboard/team', adminOnly: true },
+  { icon: Truck, label: 'Fleet Dashboard', href: '/dashboard/fleet', adminOnly: false },
+  { icon: Route, label: 'Fleet Routes', href: '/dashboard/fleet/routes', adminOnly: false },
+  { icon: Car, label: 'Fleet Vehicles', href: '/dashboard/fleet/vehicles', adminOnly: false },
   { icon: UserCircle, label: 'Profile', href: '/dashboard/profile', adminOnly: false },
   { icon: Settings, label: 'Settings', href: '/dashboard/settings', adminOnly: false },
 ];
