@@ -1,7 +1,7 @@
 
 
 const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
-const MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite"];
+const MODELS = ["gemini-3-flash-preview", "gemini-2.5-flash"];
 
 async function callGemini(apiKey: string, body: Record<string, unknown>): Promise<Response> {
   for (const model of MODELS) {
