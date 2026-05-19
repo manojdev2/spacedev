@@ -1,6 +1,22 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
+const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
+
+async function callGemini(apiKey: string, body: Record<string, unknown>): Promise<Response> {
+  for (const model of MODELS) {
+    const res = await fetch(GEMINI_URL, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ ...body, model }),
+    });
+    if (res.status !== 503) return res;
+    console.warn(`${model} returned 503, trying fallback...`);
+  }
+  throw new Error("All Gemini models unavailable (503). Try again later.");
+}
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -208,14 +224,7 @@ ${candidateLocations.map(loc => `- ID: ${loc.id}, Name: ${loc.name}, Category: $
 
 Select up to ${limit} stores that best match the user's preferences. For each, provide a personalized reason why they might like it.`;
 
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${GEMINI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "gemini-2.5-flash",
+    const response = await callGemini(GEMINI_API_KEY, {
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: "Generate personalized store recommendations." }
@@ -250,7 +259,6 @@ Select up to ${limit} stores that best match the user's preferences. For each, p
           }
         ],
         tool_choice: { type: "function", function: { name: "recommend_stores" } }
-      }),
     });
 
     if (!response.ok) {

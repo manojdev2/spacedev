@@ -1,5 +1,21 @@
 
 
+const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
+const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
+
+async function callGemini(apiKey: string, body: Record<string, unknown>): Promise<Response> {
+  for (const model of MODELS) {
+    const res = await fetch(GEMINI_URL, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ ...body, model }),
+    });
+    if (res.status !== 503) return res;
+    console.warn(`${model} returned 503, trying fallback...`);
+  }
+  throw new Error("All Gemini models unavailable (503). Try again later.");
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
@@ -67,20 +83,12 @@ async function extractLocationsFromContent(
   content: string,
   geminiApiKey: string
 ): Promise<ScrapedLocation[]> {
-  const aiResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/openai/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${geminiApiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'gemini-2.5-flash',
-      messages: [
-        { role: 'system', content: EXTRACTION_PROMPT },
-        { role: 'user', content: `Extract store locations from this content:\n\n${content.substring(0, 50000)}` },
-      ],
-      temperature: 0.1,
-    }),
+  const aiResponse = await callGemini(geminiApiKey, {
+    messages: [
+      { role: 'system', content: EXTRACTION_PROMPT },
+      { role: 'user', content: `Extract store locations from this content:\n\n${content.substring(0, 50000)}` },
+    ],
+    temperature: 0.1,
   });
 
   const aiData = await aiResponse.json();

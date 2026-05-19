@@ -1,6 +1,22 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
+const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
+
+async function callGemini(apiKey: string, body: Record<string, unknown>): Promise<Response> {
+  for (const model of MODELS) {
+    const res = await fetch(GEMINI_URL, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ ...body, model }),
+    });
+    if (res.status !== 503) return res;
+    console.warn(`${model} returned 503, trying fallback...`);
+  }
+  throw new Error("All Gemini models unavailable (503). Try again later.");
+}
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -187,15 +203,8 @@ ${JSON.stringify(demandSummary, null, 2)}
 
 Calculate the coverage improvement from adding these ${hypothetical_locations.length} hypothetical location(s).`;
 
-      const simResponse = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${GEMINI_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "gemini-2.5-flash",
-          messages: [
+      const simResponse = await callGemini(GEMINI_API_KEY, {
+        messages: [
             { role: "system", content: simulationSystemPrompt },
             { role: "user", content: simulationUserPrompt },
           ],
@@ -235,13 +244,12 @@ Calculate the coverage improvement from adding these ${hypothetical_locations.le
             },
           ],
           tool_choice: { type: "function", function: { name: "simulation_result" } },
-        }),
       });
 
       if (!simResponse.ok) {
         const errorText = await simResponse.text();
         console.error("Simulation AI error:", simResponse.status, errorText);
-        throw new Error("Simulation analysis failed");
+        throw new Error(`Simulation AI error ${simResponse.status}: ${errorText}`);
       }
 
       const simData = await simResponse.json();
@@ -308,15 +316,7 @@ Please provide:
 
 Focus on actionable insights with specific location recommendations.`;
 
-    // Call Lovable AI
-    const aiResponse = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${GEMINI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "gemini-2.5-flash",
+    const aiResponse = await callGemini(GEMINI_API_KEY, {
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
@@ -400,7 +400,6 @@ Focus on actionable insights with specific location recommendations.`;
           },
         ],
         tool_choice: { type: "function", function: { name: "coverage_analysis" } },
-      }),
     });
 
     if (!aiResponse.ok) {
@@ -418,7 +417,7 @@ Focus on actionable insights with specific location recommendations.`;
       }
       const errorText = await aiResponse.text();
       console.error("AI gateway error:", aiResponse.status, errorText);
-      throw new Error("AI analysis failed");
+      throw new Error(`AI error ${aiResponse.status}: ${errorText}`);
     }
 
     const aiData = await aiResponse.json();
