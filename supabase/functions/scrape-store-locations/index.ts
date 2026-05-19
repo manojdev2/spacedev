@@ -74,7 +74,7 @@ async function extractLocationsFromContent(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       messages: [
         { role: 'system', content: EXTRACTION_PROMPT },
         { role: 'user', content: `Extract store locations from this content:\n\n${content.substring(0, 50000)}` },
