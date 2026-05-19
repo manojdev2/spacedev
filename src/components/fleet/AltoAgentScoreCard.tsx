@@ -1,157 +1,192 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import type { AltoAgentScores } from "@/types/alto";
 
 interface Props {
-  scores: AltoAgentScores;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  scores: Record<string, any>;
 }
 
-function ConfidenceBadge({ pct }: { pct: number }) {
-  const color = pct >= 80 ? "default" : pct >= 60 ? "secondary" : "destructive";
-  return <Badge variant={color}>{pct}% conf.</Badge>;
-}
-
-function Row({ label, value, sub }: { label: string; value: string; sub?: string }) {
+function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-start justify-between gap-2 py-1 border-b last:border-0">
       <span className="text-xs text-muted-foreground">{label}</span>
-      <div className="text-right">
-        <span className="text-sm font-medium">{value}</span>
-        {sub && <div className="text-xs text-muted-foreground">{sub}</div>}
-      </div>
+      <span className="text-sm font-medium text-right max-w-[60%]">{value}</span>
     </div>
   );
 }
 
+function AgentCard({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) {
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm">{icon} {title}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-0">{children}</CardContent>
+    </Card>
+  );
+}
+
 export function AltoAgentScoreCard({ scores }: Props) {
-  const { energy, charger, sla, traffic, risk, fleet_coordination } = scores;
+  // normalise: accept both "energy" and "energy_agent" key styles
+  const get = (key: string) => scores[key] ?? scores[`${key}_agent`] ?? null;
+
+  const energy = get("energy");
+  const charger = get("charger");
+  const sla = get("sla");
+  const traffic = get("traffic");
+  const risk = get("risk");
+  const fleet = get("fleet_coordination");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
       {energy && (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span>⚡ Energy Agent</span>
-              <ConfidenceBadge pct={energy.confidence_pct} />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-0">
-            <Row label="Total consumption" value={`${energy.total_kwh.toFixed(1)} kWh`} />
-            <Row label="SOC at destination" value={`${Math.round(energy.soc_at_destination_pct)}%`} />
-            <Row label="Range remaining" value={`${Math.round(energy.range_remaining_km)} km`} />
-            <Row label="Efficiency" value={`${energy.efficiency_kwh_per_km.toFixed(3)} kWh/km`} />
-            {energy.key_factors.length > 0 && (
-              <div className="pt-1 text-xs text-muted-foreground">{energy.key_factors.join(" · ")}</div>
-            )}
-          </CardContent>
-        </Card>
+        <AgentCard icon="⚡" title="Energy Agent">
+          <Row label="Total consumption" value={`${Number(energy.total_kwh ?? 0).toFixed(1)} kWh`} />
+          <Row label="SOC at destination" value={`${Math.round(energy.soc_at_destination_pct ?? 0)}%`} />
+          <Row label="Range remaining" value={`${Math.round(energy.range_remaining_km ?? 0)} km`} />
+          {energy.efficiency_kwh_per_km != null && (
+            <Row label="Efficiency" value={`${Number(energy.efficiency_kwh_per_km).toFixed(3)} kWh/km`} />
+          )}
+          {Array.isArray(energy.key_factors) && energy.key_factors.length > 0 && (
+            <p className="pt-1 text-xs text-muted-foreground">{energy.key_factors[0]}</p>
+          )}
+        </AgentCard>
       )}
 
       {charger && (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span>🔌 Charger Agent</span>
-              <ConfidenceBadge pct={charger.confidence_pct} />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-0">
-            <Row label="Charging required" value={charger.charging_required ? "Yes" : "No"} />
-            <Row label="Stops" value={String(charger.recommended_stops.length)} />
-            <Row label="Total charge time" value={`${charger.total_charging_time_min} min`} />
-            <Row label="Energy to add" value={`${charger.total_kwh_to_charge.toFixed(1)} kWh`} />
-            {charger.notes && <div className="pt-1 text-xs text-muted-foreground">{charger.notes}</div>}
-          </CardContent>
-        </Card>
+        <AgentCard icon="🔌" title="Charger Agent">
+          <Row
+            label="Charging required"
+            value={
+              charger.charging_required != null
+                ? charger.charging_required ? "Yes" : "No"
+                : (charger.stops_needed ?? 0) > 0 ? "Yes" : "No"
+            }
+          />
+          <Row
+            label="Stops"
+            value={String(
+              charger.stops_needed ??
+              charger.recommended_stops?.length ??
+              charger.stops?.length ?? 0
+            )}
+          />
+          {charger.total_charging_time_min != null && (
+            <Row label="Charge time" value={`${charger.total_charging_time_min} min`} />
+          )}
+          {(charger.recommendation ?? charger.notes) && (
+            <p className="pt-1 text-xs text-muted-foreground line-clamp-3">
+              {charger.recommendation ?? charger.notes}
+            </p>
+          )}
+        </AgentCard>
       )}
 
       {sla && (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span>📅 SLA Agent</span>
-              <ConfidenceBadge pct={sla.confidence_pct} />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-0">
-            <Row label="On-time probability" value={`${Math.round(sla.on_time_probability_pct)}%`} />
+        <AgentCard icon="📅" title="SLA Agent">
+          <Row
+            label="On-time probability"
+            value={`${Math.round(sla.on_time_probability_pct ?? 0)}%`}
+          />
+          {sla.estimated_arrival_iso && (
             <Row
               label="Est. arrival"
               value={new Date(sla.estimated_arrival_iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
             />
-            <Row label="Delay" value={sla.delay_minutes > 0 ? `+${sla.delay_minutes} min` : "None"} />
-            {sla.primary_delay_reason && (
-              <div className="pt-1 text-xs text-muted-foreground">{sla.primary_delay_reason}</div>
-            )}
-          </CardContent>
-        </Card>
+          )}
+          {sla.estimated_arrival_min != null && (
+            <Row label="Travel time" value={`${sla.estimated_arrival_min} min`} />
+          )}
+          <Row
+            label="Delay"
+            value={
+              (sla.delay_minutes ?? 0) > 0 ? `+${sla.delay_minutes} min` : "None"
+            }
+          />
+          {sla.recommendation && (
+            <p className="pt-1 text-xs text-muted-foreground line-clamp-3">{sla.recommendation}</p>
+          )}
+        </AgentCard>
       )}
 
       {traffic && (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span>🚦 Traffic Agent</span>
-              <ConfidenceBadge pct={traffic.confidence_pct} />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-0">
-            <Row label="Current delay" value={`${traffic.current_delay_minutes} min`} />
-            <Row label="Congestion level" value={traffic.traffic_density} />
-            <Row label="Congestion segments" value={String(traffic.congestion_segments.length)} />
-            {traffic.incident_warnings.length > 0 && (
-              <div className="pt-1 text-xs text-destructive">{traffic.incident_warnings[0]}</div>
-            )}
-          </CardContent>
-        </Card>
+        <AgentCard icon="🚦" title="Traffic Agent">
+          <Row
+            label="Delay"
+            value={`${traffic.current_delay_minutes ?? traffic.delay_min ?? 0} min`}
+          />
+          <Row
+            label="Congestion"
+            value={traffic.traffic_density ?? traffic.congestion_level ?? "—"}
+          />
+          {traffic.best_departure_offset_min != null && (
+            <Row
+              label="Best departure offset"
+              value={traffic.best_departure_offset_min > 0 ? `+${traffic.best_departure_offset_min} min` : "Now"}
+            />
+          )}
+          {traffic.recommendation && (
+            <p className="pt-1 text-xs text-muted-foreground line-clamp-3">{traffic.recommendation}</p>
+          )}
+        </AgentCard>
       )}
 
       {risk && (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span>⚠️ Risk Agent</span>
-              <ConfidenceBadge pct={risk.confidence_pct} />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-0">
-            <Row label="Composite score" value={`${Math.round(risk.composite_score)} / 100`} />
-            <Row label="Range anxiety" value={String(Math.round(risk.range_anxiety_score))} />
-            <Row label="Charger availability" value={String(Math.round(risk.charger_availability_score))} />
-            <Row label="SLA risk" value={String(Math.round(risk.sla_risk_score))} />
-            {risk.mitigation_actions.length > 0 && (
-              <div className="pt-1 text-xs text-muted-foreground">{risk.mitigation_actions[0]}</div>
-            )}
-          </CardContent>
-        </Card>
+        <AgentCard icon="⚠️" title="Risk Agent">
+          <Row
+            label="Composite score"
+            value={`${Math.round(risk.composite_score ?? 0)} / 100`}
+          />
+          <Row label="Level" value={risk.risk_level ?? "—"} />
+          <Row
+            label="Range anxiety"
+            value={String(Math.round(
+              risk.range_anxiety_score ?? risk.component_scores?.range_anxiety ?? 0
+            ))}
+          />
+          <Row
+            label="Charger availability"
+            value={String(Math.round(
+              risk.charger_availability_score ?? risk.component_scores?.charger_availability ?? 0
+            ))}
+          />
+          {Array.isArray(risk.mitigation_actions ?? risk.mitigation_suggestions) && (
+            <p className="pt-1 text-xs text-muted-foreground line-clamp-2">
+              {(risk.mitigation_actions ?? risk.mitigation_suggestions)?.[0]}
+            </p>
+          )}
+        </AgentCard>
       )}
 
-      {fleet_coordination && (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span>🚛 Fleet Agent</span>
-              <ConfidenceBadge pct={fleet_coordination.confidence_pct} />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-0">
-            <Row label="Charger conflicts" value={String(fleet_coordination.charger_conflicts.length)} />
-            <Row
-              label="Recommended offset"
-              value={
-                fleet_coordination.recommended_departure_offset_min > 0
-                  ? `+${fleet_coordination.recommended_departure_offset_min} min`
-                  : "None"
-              }
-            />
-            <Row label="Fleet efficiency" value={`${Math.round(fleet_coordination.fleet_efficiency_score)}%`} />
-            {fleet_coordination.coordination_notes && (
-              <div className="pt-1 text-xs text-muted-foreground">{fleet_coordination.coordination_notes}</div>
+      {fleet && (
+        <AgentCard icon="🚛" title="Fleet Agent">
+          <Row
+            label="Conflicts"
+            value={String(
+              fleet.charger_conflicts?.length ??
+              fleet.conflicts?.length ?? 0
             )}
-          </CardContent>
-        </Card>
+          />
+          <Row
+            label="Swarm risk"
+            value={fleet.swarm_risk_level ?? "—"}
+          />
+          <Row
+            label="Departure offset"
+            value={
+              (fleet.recommended_departure_offset_min ?? 0) > 0
+                ? `+${fleet.recommended_departure_offset_min} min`
+                : "None"
+            }
+          />
+          {(fleet.coordination_notes ?? fleet.recommendation) && (
+            <p className="pt-1 text-xs text-muted-foreground line-clamp-3">
+              {fleet.coordination_notes ?? fleet.recommendation}
+            </p>
+          )}
+        </AgentCard>
       )}
+
     </div>
   );
 }

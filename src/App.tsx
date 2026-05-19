@@ -41,6 +41,7 @@ import InvoicesPage from "./pages/dashboard/InvoicesPage";
 import FleetDashboardPage from "./pages/dashboard/fleet/FleetDashboardPage";
 import FleetVehiclesPage from "./pages/dashboard/fleet/FleetVehiclesPage";
 import FleetRoutesPage from "./pages/dashboard/fleet/FleetRoutesPage";
+import FleetMapPage from "./pages/dashboard/fleet/FleetMapPage";
 import EmbedWidget from "./pages/EmbedWidget";
 import NotFound from "./pages/NotFound";
 
@@ -103,6 +104,7 @@ const App = () => (
                   <Route path="fleet" element={<FleetDashboardPage />} />
                   <Route path="fleet/vehicles" element={<FleetVehiclesPage />} />
                   <Route path="fleet/routes" element={<FleetRoutesPage />} />
+                  <Route path="fleet/map" element={<FleetMapPage />} />
                 </Route>
                 
                 {/* Catch-all */}

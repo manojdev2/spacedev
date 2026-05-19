@@ -37,31 +37,60 @@ async function fetchElevation(lat: number, lng: number): Promise<number> {
   }
 }
 
+function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
 async function fetchDirections(
   originLat: number, originLng: number,
   destLat: number, destLng: number
 ): Promise<{ distance_km: number; duration_min: number; polyline: string }> {
+  // Haversine fallback used when no API key or if Routes API fails
+  const fallback = () => {
+    const distance_km = haversineKm(originLat, originLng, destLat, destLng);
+    return { distance_km, duration_min: distance_km * 1.5, polyline: "" };
+  };
+
+  if (!MAPS_API_KEY) return fallback();
+
   try {
-    if (!MAPS_API_KEY) {
-      const R = 6371;
-      const dLat = (destLat - originLat) * Math.PI / 180;
-      const dLng = (destLng - originLng) * Math.PI / 180;
-      const a = Math.sin(dLat / 2) ** 2 + Math.cos(originLat * Math.PI / 180) * Math.cos(destLat * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-      const distance_km = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return { distance_km, duration_min: distance_km * 1.2, polyline: "" };
-    }
-    const res = await fetch(
-      `https://maps.googleapis.com/maps/api/directions/json?origin=${originLat},${originLng}&destination=${destLat},${destLng}&mode=driving&departure_time=now&key=${MAPS_API_KEY}`
-    );
+    const res = await fetch("https://routes.googleapis.com/directions/v2:computeRoutes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": MAPS_API_KEY,
+        "X-Goog-FieldMask": "routes.distanceMeters,routes.duration,routes.polyline.encodedPolyline",
+      },
+      body: JSON.stringify({
+        origin: { location: { latLng: { latitude: originLat, longitude: originLng } } },
+        destination: { location: { latLng: { latitude: destLat, longitude: destLng } } },
+        travelMode: "DRIVE",
+        routingPreference: "TRAFFIC_AWARE",
+        computeAlternativeRoutes: false,
+      }),
+    });
+
+    if (!res.ok) return fallback();
     const d = await res.json();
-    const leg = d.routes?.[0]?.legs?.[0];
+    const route = d.routes?.[0];
+    if (!route) return fallback();
+
+    const distance_km = (route.distanceMeters ?? 0) / 1000;
+    // duration comes back as e.g. "1523s"
+    const durationStr: string = route.duration ?? "0s";
+    const duration_min = parseInt(durationStr.replace("s", ""), 10) / 60;
+
     return {
-      distance_km: (leg?.distance?.value ?? 0) / 1000,
-      duration_min: (leg?.duration_in_traffic?.value ?? leg?.duration?.value ?? 0) / 60,
-      polyline: d.routes?.[0]?.overview_polyline?.points ?? "",
+      distance_km,
+      duration_min,
+      polyline: route.polyline?.encodedPolyline ?? "",
     };
   } catch {
-    return { distance_km: 0, duration_min: 0, polyline: "" };
+    return fallback();
   }
 }
 
@@ -90,7 +119,7 @@ serve(async (req) => {
     const body = await req.json();
     const { vehicle_id, origin, destination, constraints = {} } = body;
 
-    if (!vehicle_id || !origin?.lat || !origin?.lng || !destination?.lat || !destination?.lng) {
+    if (!vehicle_id || origin?.lat == null || origin?.lng == null || destination?.lat == null || destination?.lng == null) {
       return new Response(JSON.stringify({ error: "vehicle_id, origin, and destination are required" }), {
         status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });

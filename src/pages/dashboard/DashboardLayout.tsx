@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Settings, BarChart3,
-  Users, LogOut, Menu, X, ChevronLeft, Bell, UserCircle, ClipboardList, Flag, MessageSquare, Code, CalendarCheck, Layers, MapPin, Truck, Route, Car
+  Users, LogOut, Menu, X, ChevronLeft, ChevronDown, Bell, UserCircle, ClipboardList, Flag, MessageSquare, Code, CalendarCheck, Layers, MapPin, Truck, Route, Car, Map
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -17,7 +17,16 @@ import { usePayPalCapture } from '@/hooks/usePayPalCapture';
 import { useCryptoCapture } from '@/hooks/useCryptoCapture';
 import appLogo from '@/assets/logo.png';
 
-const navItems = [
+type NavChild = { icon: React.ElementType; label: string; href: string };
+type NavItem = {
+  icon: React.ElementType;
+  label: string;
+  href: string;
+  adminOnly: boolean;
+  children?: NavChild[];
+};
+
+const navItems: NavItem[] = [
   { icon: LayoutDashboard, label: 'Overview', href: '/dashboard', adminOnly: false },
   { icon: Layers, label: 'Store Zones', href: '/dashboard/store-zones', adminOnly: false },
   { icon: MapPin, label: 'Locations', href: '/dashboard/locations', adminOnly: false },
@@ -28,9 +37,15 @@ const navItems = [
   { icon: BarChart3, label: 'Analytics', href: '/dashboard/analytics', adminOnly: false },
   { icon: Code, label: 'Widget', href: '/dashboard/widget', adminOnly: true },
   { icon: Users, label: 'Team', href: '/dashboard/team', adminOnly: true },
-  { icon: Truck, label: 'Fleet Dashboard', href: '/dashboard/fleet', adminOnly: false },
-  { icon: Route, label: 'Fleet Routes', href: '/dashboard/fleet/routes', adminOnly: false },
-  { icon: Car, label: 'Fleet Vehicles', href: '/dashboard/fleet/vehicles', adminOnly: false },
+  {
+    icon: Truck, label: 'Fleet', href: '/dashboard/fleet', adminOnly: false,
+    children: [
+      { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard/fleet' },
+      { icon: Route, label: 'Routes', href: '/dashboard/fleet/routes' },
+      { icon: Car, label: 'Vehicles', href: '/dashboard/fleet/vehicles' },
+      { icon: Map, label: 'Live Map', href: '/dashboard/fleet/map' },
+    ],
+  },
   { icon: UserCircle, label: 'Profile', href: '/dashboard/profile', adminOnly: false },
   { icon: Settings, label: 'Settings', href: '/dashboard/settings', adminOnly: false },
 ];
@@ -38,6 +53,7 @@ const navItems = [
 export default function DashboardLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set(['/dashboard/fleet']));
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [organizationName, setOrganizationName] = useState<string | null>(null);
@@ -183,30 +199,91 @@ export default function DashboardLayout() {
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto scrollbar-thin">
           {navItems
             .filter((item) => !item.adminOnly || role === 'admin')
-            .map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                isActive(item.href)
-                  ? 'bg-primary/10 text-primary font-medium'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
-            >
-              <item.icon className="h-5 w-5 shrink-0" />
-              <motion.span
-                initial={false}
-                animate={{ 
-                  opacity: isSidebarOpen ? 1 : 0,
-                  width: isSidebarOpen ? 'auto' : 0
-                }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden whitespace-nowrap"
-              >
-                {item.label}
-              </motion.span>
-            </Link>
-          ))}
+            .map((item) => {
+              if (item.children) {
+                const isGroupActive = location.pathname.startsWith(item.href);
+                const isOpen = openGroups.has(item.href);
+                const toggleGroup = (e: React.MouseEvent) => {
+                  e.preventDefault();
+                  setOpenGroups(prev => {
+                    const next = new Set(prev);
+                    next.has(item.href) ? next.delete(item.href) : next.add(item.href);
+                    return next;
+                  });
+                };
+                return (
+                  <div key={item.href}>
+                    <div className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors cursor-pointer ${
+                      isGroupActive ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    }`}>
+                      <Link to={item.href} className="flex items-center gap-3 flex-1 min-w-0">
+                        <item.icon className="h-5 w-5 shrink-0" />
+                        <motion.span
+                          initial={false}
+                          animate={{ opacity: isSidebarOpen ? 1 : 0, width: isSidebarOpen ? 'auto' : 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden whitespace-nowrap"
+                        >
+                          {item.label}
+                        </motion.span>
+                      </Link>
+                      {isSidebarOpen && (
+                        <button onClick={toggleGroup} className="shrink-0 p-0.5 rounded hover:bg-muted/50">
+                          <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-0' : '-rotate-90'}`} />
+                        </button>
+                      )}
+                    </div>
+                    <AnimatePresence initial={false}>
+                      {isOpen && isSidebarOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden ml-4 mt-0.5 space-y-0.5 border-l border-border pl-3"
+                        >
+                          {item.children.map(child => (
+                            <Link
+                              key={child.href}
+                              to={child.href}
+                              className={`flex items-center gap-2 px-2 py-2 rounded-lg text-sm transition-colors ${
+                                location.pathname === child.href
+                                  ? 'bg-primary/10 text-primary font-medium'
+                                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                              }`}
+                            >
+                              <child.icon className="h-4 w-4 shrink-0" />
+                              {child.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                    isActive(item.href)
+                      ? 'bg-primary/10 text-primary font-medium'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                  }`}
+                >
+                  <item.icon className="h-5 w-5 shrink-0" />
+                  <motion.span
+                    initial={false}
+                    animate={{ opacity: isSidebarOpen ? 1 : 0, width: isSidebarOpen ? 'auto' : 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden whitespace-nowrap"
+                  >
+                    {item.label}
+                  </motion.span>
+                </Link>
+              );
+            })}
         </nav>
 
         {/* User section */}
@@ -289,21 +366,76 @@ export default function DashboardLayout() {
             <nav className="flex-1 p-4 space-y-1 overflow-y-auto scrollbar-thin">
               {navItems
                 .filter((item) => !item.adminOnly || role === 'admin')
-                .map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  onClick={() => setIsMobileSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                    isActive(item.href)
-                      ? 'bg-primary/10 text-primary font-medium'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                  }`}
-                >
-                  <item.icon className="h-5 w-5" />
-                  <span>{item.label}</span>
-                </Link>
-              ))}
+                .map((item) => {
+                  if (item.children) {
+                    const isGroupActive = location.pathname.startsWith(item.href);
+                    const isOpen = openGroups.has(item.href);
+                    return (
+                      <div key={item.href}>
+                        <div className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                          isGroupActive ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                        }`}>
+                          <Link to={item.href} className="flex items-center gap-3 flex-1" onClick={() => setIsMobileSidebarOpen(false)}>
+                            <item.icon className="h-5 w-5 shrink-0" />
+                            <span>{item.label}</span>
+                          </Link>
+                          <button
+                            onClick={() => setOpenGroups(prev => {
+                              const next = new Set(prev);
+                              next.has(item.href) ? next.delete(item.href) : next.add(item.href);
+                              return next;
+                            })}
+                            className="shrink-0 p-0.5"
+                          >
+                            <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-0' : '-rotate-90'}`} />
+                          </button>
+                        </div>
+                        <AnimatePresence initial={false}>
+                          {isOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden ml-4 mt-0.5 space-y-0.5 border-l border-border pl-3"
+                            >
+                              {item.children.map(child => (
+                                <Link
+                                  key={child.href}
+                                  to={child.href}
+                                  onClick={() => setIsMobileSidebarOpen(false)}
+                                  className={`flex items-center gap-2 px-2 py-2 rounded-lg text-sm transition-colors ${
+                                    location.pathname === child.href
+                                      ? 'bg-primary/10 text-primary font-medium'
+                                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                                  }`}
+                                >
+                                  <child.icon className="h-4 w-4 shrink-0" />
+                                  {child.label}
+                                </Link>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+                  return (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      onClick={() => setIsMobileSidebarOpen(false)}
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                        isActive(item.href)
+                          ? 'bg-primary/10 text-primary font-medium'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                      }`}
+                    >
+                      <item.icon className="h-5 w-5" />
+                      <span>{item.label}</span>
+                    </Link>
+                  );
+                })}
             </nav>
           </motion.aside>
         </motion.div>

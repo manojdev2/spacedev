@@ -16,6 +16,8 @@ const schema = z.object({
   degradation_factor: z.coerce.number().min(0.1).max(1.0),
   payload_kg: z.coerce.number().min(0),
   status: z.enum(["idle", "en_route", "charging", "offline"]),
+  current_lat: z.coerce.number().min(-90).max(90).nullable().optional(),
+  current_lng: z.coerce.number().min(-180).max(180).nullable().optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -38,6 +40,8 @@ export function AltoVehicleForm({ initial, onSubmit, isLoading }: Props) {
       degradation_factor: initial?.degradation_factor ?? 1.0,
       payload_kg: initial?.payload_kg ?? 0,
       status: initial?.status ?? "idle",
+      current_lat: initial?.current_lat ?? null,
+      current_lng: initial?.current_lng ?? null,
     },
   });
 
@@ -103,6 +107,30 @@ export function AltoVehicleForm({ initial, onSubmit, isLoading }: Props) {
             <SelectItem value="offline">Offline</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="space-y-1">
+        <Label className="text-xs text-muted-foreground">Current GPS Position (for map)</Label>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <Input
+              type="number"
+              step="any"
+              placeholder="Latitude e.g. 3.1390"
+              {...register("current_lat")}
+            />
+            {errors.current_lat && <p className="text-xs text-destructive">{errors.current_lat.message}</p>}
+          </div>
+          <div className="space-y-1">
+            <Input
+              type="number"
+              step="any"
+              placeholder="Longitude e.g. 101.6869"
+              {...register("current_lng")}
+            />
+            {errors.current_lng && <p className="text-xs text-destructive">{errors.current_lng.message}</p>}
+          </div>
+        </div>
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>

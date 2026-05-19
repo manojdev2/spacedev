@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useUserOrganization } from "@/hooks/useUserOrganization";
 import { AltoFleetOverviewCard } from "@/components/fleet/AltoFleetOverviewCard";
 import { AltoSLATracker } from "@/components/fleet/AltoSLATracker";
 import { AltoRiskScoreBadge } from "@/components/fleet/AltoRiskScoreBadge";
@@ -12,16 +12,18 @@ import { Button } from "@/components/ui/button";
 import type { AltoVehicle, AltoRoute } from "@/types/alto";
 
 export default function FleetDashboardPage() {
-  const { client } = useAuthStore();
+  const { organizationId } = useUserOrganization();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const db = supabase as any;
 
   const { data: vehicles = [] } = useQuery<AltoVehicle[]>({
-    queryKey: ["alto_vehicles", client?.organization_id],
-    enabled: !!client?.organization_id,
-    queryFn: async () => {
-      const { data, error } = await supabase
+    queryKey: ["alto_vehicles", organizationId],
+    enabled: !!organizationId,
+    queryFn: async (): Promise<AltoVehicle[]> => {
+      const { data, error } = await db
         .from("alto_vehicles")
         .select("*")
-        .eq("organization_id", client!.organization_id)
+        .eq("organization_id", organizationId)
         .order("created_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as AltoVehicle[];
@@ -29,13 +31,13 @@ export default function FleetDashboardPage() {
   });
 
   const { data: routes = [] } = useQuery<AltoRoute[]>({
-    queryKey: ["alto_routes", client?.organization_id],
-    enabled: !!client?.organization_id,
-    queryFn: async () => {
-      const { data, error } = await supabase
+    queryKey: ["alto_routes", organizationId],
+    enabled: !!organizationId,
+    queryFn: async (): Promise<AltoRoute[]> => {
+      const { data, error } = await db
         .from("alto_routes")
         .select("*")
-        .eq("organization_id", client!.organization_id)
+        .eq("organization_id", organizationId)
         .in("status", ["planned", "active"])
         .order("created_at", { ascending: false })
         .limit(20);

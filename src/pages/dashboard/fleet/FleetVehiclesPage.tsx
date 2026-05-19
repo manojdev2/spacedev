@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useUserOrganization } from "@/hooks/useUserOrganization";
 import { toast } from "@/hooks/use-toast";
 import { AltoVehicleForm } from "@/components/fleet/AltoVehicleForm";
-import { AltoRiskScoreBadge } from "@/components/fleet/AltoRiskScoreBadge";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,31 +11,35 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Trash2, Plus, Pencil } from "lucide-react";
 import type { AltoVehicle } from "@/types/alto";
 
+type VehicleFormData = Pick<AltoVehicle, "name" | "model" | "battery_capacity_kwh" | "max_range_km" | "current_soc_pct" | "degradation_factor" | "payload_kg" | "status"> & { current_lat?: number | null; current_lng?: number | null };
+
 export default function FleetVehiclesPage() {
-  const { client } = useAuthStore();
+  const { organizationId } = useUserOrganization();
   const qc = useQueryClient();
   const [editVehicle, setEditVehicle] = useState<AltoVehicle | null>(null);
   const [addOpen, setAddOpen] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const db = supabase as any;
 
   const { data: vehicles = [], isLoading } = useQuery<AltoVehicle[]>({
-    queryKey: ["alto_vehicles", client?.organization_id],
-    enabled: !!client?.organization_id,
-    queryFn: async () => {
-      const { data, error } = await supabase
+    queryKey: ["alto_vehicles", organizationId],
+    enabled: !!organizationId,
+    queryFn: async (): Promise<AltoVehicle[]> => {
+      const { data, error } = await db
         .from("alto_vehicles")
         .select("*")
-        .eq("organization_id", client!.organization_id)
+        .eq("organization_id", organizationId)
         .order("name");
       if (error) throw error;
       return (data ?? []) as AltoVehicle[];
     },
   });
 
-  const addMutation = useMutation({
-    mutationFn: async (values: Omit<AltoVehicle, "id" | "created_at" | "updated_at" | "organization_id" | "driver_id" | "last_seen_at" | "current_lat" | "current_lng">) => {
-      const { error } = await supabase.from("alto_vehicles").insert({
+  const addMutation = useMutation<void, Error, VehicleFormData>({
+    mutationFn: async (values) => {
+      const { error } = await db.from("alto_vehicles").insert({
         ...values,
-        organization_id: client!.organization_id,
+        organization_id: organizationId,
       });
       if (error) throw error;
     },
@@ -48,9 +51,9 @@ export default function FleetVehiclesPage() {
     onError: (e) => toast({ title: "Error", description: String(e), variant: "destructive" }),
   });
 
-  const updateMutation = useMutation({
-    mutationFn: async ({ id, values }: { id: string; values: Partial<AltoVehicle> }) => {
-      const { error } = await supabase.from("alto_vehicles").update(values).eq("id", id);
+  const updateMutation = useMutation<void, Error, { id: string; values: Partial<VehicleFormData> }>({
+    mutationFn: async ({ id, values }) => {
+      const { error } = await db.from("alto_vehicles").update(values).eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -61,9 +64,9 @@ export default function FleetVehiclesPage() {
     onError: (e) => toast({ title: "Error", description: String(e), variant: "destructive" }),
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from("alto_vehicles").delete().eq("id", id);
+  const deleteMutation = useMutation<void, Error, string>({
+    mutationFn: async (id) => {
+      const { error } = await db.from("alto_vehicles").delete().eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -97,7 +100,7 @@ export default function FleetVehiclesPage() {
             </DialogHeader>
             <AltoVehicleForm
               isLoading={addMutation.isPending}
-              onSubmit={(values) => addMutation.mutate(values as Parameters<typeof addMutation.mutate>[0])}
+              onSubmit={(values) => addMutation.mutate(values as VehicleFormData)}
             />
           </DialogContent>
         </Dialog>
