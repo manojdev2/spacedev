@@ -91,7 +91,7 @@ export function StoreZoneManager() {
           <h2 className="text-2xl font-bold">Store Zone Manager</h2>
           <p className="text-muted-foreground">Define and manage your store coverage zones</p>
         </div>
-        <Button onClick={openForm} className="bg-gradient-primary"><Plus className="h-4 w-4 mr-2" />Add Store Zone</Button>
+        <Button onClick={openForm}><Plus className="h-4 w-4 mr-2" />Add Store Zone</Button>
       </div>
 
       <Tabs defaultValue="store-zones" className="space-y-6">
@@ -117,7 +117,7 @@ export function StoreZoneManager() {
             <Card className="border-dashed"><CardContent className="flex flex-col items-center justify-center py-12">
               <Layers className="h-12 w-12 text-muted-foreground mb-4" /><h3 className="text-lg font-semibold mb-2">No store zones yet</h3>
               <p className="text-muted-foreground text-center mb-4">Create your first store coverage zone to get started</p>
-              <Button onClick={openForm} className="bg-gradient-primary"><Plus className="h-4 w-4 mr-2" />Create Store Zone</Button>
+              <Button onClick={openForm}><Plus className="h-4 w-4 mr-2" />Create Store Zone</Button>
             </CardContent></Card>
           )}
         </TabsContent>

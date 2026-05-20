@@ -9,6 +9,19 @@ import { HypotheticalLocation } from './WhatIfSimulation';
 const mapContainerStyle = { width: '100%', height: '100%' };
 const defaultCenter = { lat: 40.7128, lng: -74.0060 };
 
+const MAP_STYLE: google.maps.MapTypeStyle[] = [
+  { elementType: "geometry",             stylers: [{ color: "#f5f5f5" }] },
+  { elementType: "labels.text.fill",     stylers: [{ color: "#9ca3af" }] },
+  { elementType: "labels.text.stroke",   stylers: [{ color: "#ffffff" }] },
+  { featureType: "road",          elementType: "geometry",  stylers: [{ color: "#ffffff" }] },
+  { featureType: "road.arterial", elementType: "geometry",  stylers: [{ color: "#efefef" }] },
+  { featureType: "road.highway",  elementType: "geometry",  stylers: [{ color: "#e5e5e5" }] },
+  { featureType: "water",         elementType: "geometry",  stylers: [{ color: "#e8eff5" }] },
+  { featureType: "poi",                                      stylers: [{ visibility: "off" }] },
+  { featureType: "transit",                                  stylers: [{ visibility: "off" }] },
+  { featureType: "administrative", elementType: "geometry.stroke", stylers: [{ color: "#e5e7eb" }] },
+];
+
 interface StoreZoneMapViewProps {
   storeZones: StoreZone[];
   selectedStoreZone: StoreZone | null;
@@ -75,7 +88,7 @@ export function StoreZoneMapView({
 
   return (
     <GoogleMap mapContainerStyle={mapContainerStyle} center={defaultCenter} zoom={11} onLoad={handleMapLoad} onClick={handleMapClick}
-      options={{ styles: [{ featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] }], mapTypeControl: true, streetViewControl: false, fullscreenControl: true }}>
+      options={{ styles: MAP_STYLE, disableDefaultUI: true, zoomControl: true, fullscreenControl: true, clickableIcons: false, gestureHandling: "greedy" }}>
       {isDrawing && formData?.territory_type === 'polygon' && (
         <DrawingManager onPolygonComplete={handlePolygonComplete} options={{
           drawingControl: true, drawingControlOptions: { position: google.maps.ControlPosition.TOP_CENTER, drawingModes: [google.maps.drawing.OverlayType.POLYGON] },
