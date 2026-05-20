@@ -62,23 +62,48 @@ export function AltoCommandMap({ vehicles, routes, selectedVehicleId, onVehicleC
     mapRef.current.fitBounds(bounds, 80); // 80px padding
   }, [vehicles]);
 
+  const zoom = (delta: number) => {
+    if (!mapRef.current) return;
+    mapRef.current.setZoom((mapRef.current.getZoom() ?? 12) + delta);
+  };
+
   return (
-    <GoogleMap
-      mapContainerStyle={CONTAINER_STYLE}
-      defaultCenter={DEFAULT_CENTER}
-      defaultZoom={12}
-      options={MAP_OPTIONS}
-      onLoad={(map) => { mapRef.current = map; }}
-    >
-      <AltoRouteLayer routes={activeRoutes} />
-      {vehicles.map((vehicle) => (
-        <AltoVehicleMarker
-          key={vehicle.id}
-          vehicle={vehicle}
-          selected={selectedVehicleId === vehicle.id}
-          onClick={() => onVehicleClick(vehicle.id)}
-        />
-      ))}
-    </GoogleMap>
+    <div className="relative w-full h-full">
+      <GoogleMap
+        mapContainerStyle={CONTAINER_STYLE}
+        defaultCenter={DEFAULT_CENTER}
+        defaultZoom={12}
+        options={MAP_OPTIONS}
+        onLoad={(map) => { mapRef.current = map; }}
+      >
+        <AltoRouteLayer routes={activeRoutes} />
+        {vehicles.map((vehicle) => (
+          <AltoVehicleMarker
+            key={vehicle.id}
+            vehicle={vehicle}
+            selected={selectedVehicleId === vehicle.id}
+            onClick={() => onVehicleClick(vehicle.id)}
+          />
+        ))}
+      </GoogleMap>
+
+      {/* Custom zoom controls */}
+      <div className="absolute bottom-8 right-3 flex flex-col shadow-md rounded-md overflow-hidden border border-gray-200">
+        <button
+          onClick={() => zoom(1)}
+          className="w-8 h-8 bg-white flex items-center justify-center text-gray-700 text-lg font-light hover:bg-gray-50 active:bg-gray-100 transition-colors border-b border-gray-200"
+          aria-label="Zoom in"
+        >
+          +
+        </button>
+        <button
+          onClick={() => zoom(-1)}
+          className="w-8 h-8 bg-white flex items-center justify-center text-gray-700 text-lg font-light hover:bg-gray-50 active:bg-gray-100 transition-colors"
+          aria-label="Zoom out"
+        >
+          −
+        </button>
+      </div>
+    </div>
   );
 }

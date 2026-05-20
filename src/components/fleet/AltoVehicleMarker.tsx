@@ -89,30 +89,37 @@ export function AltoVehicleMarker({ vehicle, selected, onClick }: Props) {
   const soc = Math.round(vehicle.current_soc_pct);
   const socColor = SOC_COLOR(vehicle.current_soc_pct);
 
+  // Offset keeps the marker icon anchored to the map coordinate.
+  // Badge (~20px) + 3px gap sit above, so shift y up by that amount too.
+  const badgeH = 22;
+  const gap = 3;
+
   return (
     <OverlayView position={position} mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
       <div
         onClick={onClick}
         className="cursor-pointer"
-        style={{ transform: `translate(${offset}px, ${offset}px)` }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          transform: `translate(${offset}px, ${-(size / 2 + gap + badgeH)}px)`,
+        }}
       >
-        {/* SOC badge always visible above the marker */}
+        {/* SOC badge — flex centers it naturally above the icon */}
         <div
           style={{
-            position: "absolute",
-            top: -20,
-            left: "50%",
-            transform: "translateX(-50%)",
+            marginBottom: gap,
             backgroundColor: "white",
-            border: `1.5px solid ${socColor}`,
+            border: `2px solid ${socColor}`,
             color: socColor,
-            fontSize: 10,
-            fontWeight: 700,
+            fontSize: 11,
+            fontWeight: 800,
             lineHeight: 1,
-            padding: "2px 5px",
+            padding: "3px 7px",
             borderRadius: 999,
             whiteSpace: "nowrap",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
+            boxShadow: "0 1px 4px rgba(0,0,0,0.18)",
             pointerEvents: "none",
           }}
         >
