@@ -7,9 +7,27 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { supabase } from '@/integrations/supabase/client';
+
+async function saveThemeToProfile(theme: string) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('preferences')
+    .eq('user_id', user.id)
+    .maybeSingle();
+  const existing = (profile?.preferences as Record<string, unknown>) ?? {};
+  await supabase.from('profiles').update({ preferences: { ...existing, theme } }).eq('user_id', user.id);
+}
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
+
+  const handleSetTheme = (t: string) => {
+    setTheme(t);
+    saveThemeToProfile(t);
+  };
 
   return (
     <DropdownMenu>
@@ -21,22 +39,22 @@ export function ThemeSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem 
-          onClick={() => setTheme('light')}
+        <DropdownMenuItem
+          onClick={() => handleSetTheme('light')}
           className={`flex items-center gap-2 cursor-pointer ${theme === 'light' ? 'bg-muted' : ''}`}
         >
           <Sun className="h-4 w-4" />
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => setTheme('dark')}
+        <DropdownMenuItem
+          onClick={() => handleSetTheme('dark')}
           className={`flex items-center gap-2 cursor-pointer ${theme === 'dark' ? 'bg-muted' : ''}`}
         >
           <Moon className="h-4 w-4" />
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => setTheme('system')}
+        <DropdownMenuItem
+          onClick={() => handleSetTheme('system')}
           className={`flex items-center gap-2 cursor-pointer ${theme === 'system' ? 'bg-muted' : ''}`}
         >
           <Monitor className="h-4 w-4" />
