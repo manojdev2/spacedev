@@ -86,14 +86,39 @@ export function AltoVehicleMarker({ vehicle, selected, onClick }: Props) {
   const size = selected ? 48 : 36;
   const offset = -(size / 2);
 
+  const soc = Math.round(vehicle.current_soc_pct);
+  const socColor = SOC_COLOR(vehicle.current_soc_pct);
+
   return (
     <OverlayView position={position} mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
       <div
         onClick={onClick}
         className="cursor-pointer"
         style={{ transform: `translate(${offset}px, ${offset}px)` }}
-        title={`${vehicle.name} — ${Math.round(vehicle.current_soc_pct)}% SOC`}
       >
+        {/* SOC badge always visible above the marker */}
+        <div
+          style={{
+            position: "absolute",
+            top: -20,
+            left: "50%",
+            transform: "translateX(-50%)",
+            backgroundColor: "white",
+            border: `1.5px solid ${socColor}`,
+            color: socColor,
+            fontSize: 10,
+            fontWeight: 700,
+            lineHeight: 1,
+            padding: "2px 5px",
+            borderRadius: 999,
+            whiteSpace: "nowrap",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
+            pointerEvents: "none",
+          }}
+        >
+          {soc}%
+        </div>
+
         {vehicle.status === "en_route" ? (
           <motion.div
             animate={{ scale: [1, 1.06, 1] }}
