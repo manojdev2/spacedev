@@ -15,7 +15,7 @@ import { useUserOrganization } from '@/hooks/useUserOrganization';
 import { useNotificationsRealtime } from '@/hooks/useNotificationsRealtime';
 import { usePayPalCapture } from '@/hooks/usePayPalCapture';
 import { useCryptoCapture } from '@/hooks/useCryptoCapture';
-import appLogo from '@/assets/logo.png';
+const appLogo = '/logo.png';
 
 type NavChild = { icon: React.ElementType; label: string; href: string };
 type NavItem = {
@@ -131,24 +131,11 @@ export default function DashboardLayout() {
         {/* Logo & Toggle */}
         {/* Logo & Toggle */}
         <div className={`h-16 flex items-center border-b border-border shrink-0 ${isSidebarOpen ? 'justify-between px-4' : 'justify-center px-2'}`}>
-          <Link to="/" className={`flex items-center gap-2 min-w-0 ${!isSidebarOpen ? 'justify-center' : ''}`}>
-            <img 
-              src={appLogo} 
-              alt="LocatePro" 
-              className="h-9 w-9 rounded-lg shadow-md shrink-0"
-            />
-            {isSidebarOpen && (
-              <motion.div
-                initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: 'auto' }}
-                exit={{ opacity: 0, width: 0 }}
-                transition={{ duration: 0.2, ease: 'easeInOut' }}
-                className="overflow-hidden"
-              >
-                <span className="text-xl font-bold whitespace-nowrap">
-                  Locate<span className="text-gradient">Pro</span>
-                </span>
-              </motion.div>
+          <Link to="/" className="flex items-center min-w-0 overflow-hidden">
+            {isSidebarOpen ? (
+              <img src={appLogo} alt="Logo" className="h-7 w-auto shrink-0 dark:[filter:invert(1)_hue-rotate(180deg)]" />
+            ) : (
+              <img src={appLogo} alt="Logo" className="h-6 w-auto shrink-0 scale-[0.6] origin-left dark:[filter:invert(1)_hue-rotate(180deg)]" />
             )}
           </Link>
           {isSidebarOpen && (
@@ -351,13 +338,8 @@ export default function DashboardLayout() {
             className="absolute left-0 top-0 bottom-0 w-[280px] bg-card border-r border-border flex flex-col"
           >
             <div className="h-16 flex items-center justify-between px-4 border-b border-border shrink-0">
-              <Link to="/" className="flex items-center gap-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary shadow-md">
-                  <MapPin className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <span className="text-xl font-bold">
-                  Locate<span className="text-gradient">Pro</span>
-                </span>
+              <Link to="/">
+                <img src={appLogo} alt="Logo" className="h-7 w-auto" />
               </Link>
               <button onClick={() => setIsMobileSidebarOpen(false)}>
                 <X className="h-6 w-6" />

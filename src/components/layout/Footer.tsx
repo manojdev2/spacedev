@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import appLogo from '@/assets/logo.png';
+const appLogo = '/logo.png';
 
 const footerLinks = {
   product: [
@@ -74,18 +74,15 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-12">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
-            <Link to="/" className="flex items-center gap-2.5 mb-4 group">
-            <motion.img 
-              src={appLogo}
-              alt="LocatePro"
-              className="h-10 w-10 rounded-xl shadow-md"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 400 }}
-            />
-            <span className="text-xl font-bold">
-              Locate<span className="text-gradient">Pro</span>
-            </span>
-          </Link>
+            <Link to="/" className="inline-flex mb-4">
+              <motion.img
+                src={appLogo}
+                alt="Logo"
+                className="h-8 w-auto dark:[filter:invert(1)_hue-rotate(180deg)]"
+                whileHover={{ opacity: 0.8 }}
+                transition={{ type: 'spring', stiffness: 400 }}
+              />
+            </Link>
             <p className="text-sm text-muted-foreground mb-6 max-w-xs">
               AI-powered store locator platform that helps businesses find locations, optimize service coverage, and make data-driven decisions.
             </p>

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import appLogo from '@/assets/logo.png';
+const appLogo = '/logo.png';
 
 export function ResetPasswordPage() {
   const [password, setPassword] = useState('');
@@ -113,7 +113,7 @@ export function ResetPasswordPage() {
           <img 
             src={appLogo} 
              alt="LocatePro" 
-            className="h-16 w-16 rounded-xl shadow-md mx-auto mb-6"
+            className="h-10 w-auto mx-auto mb-6 dark:[filter:invert(1)_hue-rotate(180deg)]"
           />
           <h1 className="text-2xl font-bold mb-2">Invalid or expired link</h1>
           <p className="text-muted-foreground mb-6">
@@ -137,15 +137,12 @@ export function ResetPasswordPage() {
           className="w-full max-w-md"
         >
           <div className="mb-8">
-            <div className="flex items-center gap-2.5 mb-6">
-              <img 
-                src={appLogo} 
-                 alt="LocatePro" 
-                className="h-10 w-10 rounded-lg shadow-md"
+            <div className="mb-6">
+              <img
+                src={appLogo}
+                alt="Logo"
+                className="h-8 w-auto dark:[filter:invert(1)_hue-rotate(180deg)]"
               />
-              <span className="text-2xl font-bold">
-                Locate<span className="text-gradient">Pro</span>
-              </span>
             </div>
             
             {isSuccess ? (
@@ -255,7 +252,7 @@ export function ResetPasswordPage() {
           <img 
             src={appLogo} 
             alt="LocatePro" 
-            className="w-24 h-24 rounded-3xl shadow-glow mx-auto mb-8"
+            className="h-10 w-auto mx-auto mb-8 dark:[filter:invert(1)_hue-rotate(180deg)]"
           />
           <h2 className="text-3xl font-bold mb-4">
             Create a Strong Password

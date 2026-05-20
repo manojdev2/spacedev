@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { Loader2, Mail, Lock, User, Building2, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import logo from '@/assets/locatepro-logo.png';
+const appLogo = '/logo.png';
 
 export function SignupPage() {
   const navigate = useNavigate();
@@ -103,7 +103,7 @@ export function SignupPage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30 p-4">
         <div className="w-full max-w-md">
           <div className="flex justify-center mb-8">
-            <img src={logo} alt="LocatePro" className="h-10" />
+            <img src={appLogo} alt="Logo" className="h-8 w-auto dark:[filter:invert(1)_hue-rotate(180deg)]" />
           </div>
 
           <Card className="border-2 border-accent/50">
@@ -150,7 +150,7 @@ export function SignupPage() {
       <div className="w-full max-w-md">
         <div className="flex justify-center mb-8">
           <Link to="/">
-            <img src={logo} alt="LocatePro" className="h-10" />
+            <img src={appLogo} alt="Logo" className="h-8 w-auto dark:[filter:invert(1)_hue-rotate(180deg)]" />
           </Link>
         </div>
 

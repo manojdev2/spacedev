@@ -12,7 +12,7 @@ import { EmailConfigStep, type EmailConfigData } from '@/components/setup/EmailC
 import { SecurityStep, type SecurityData } from '@/components/setup/SecurityStep';
 import { SetupCompleteStep } from '@/components/setup/SetupCompleteStep';
 import { useSystemSetup } from '@/hooks/useSystemSetup';
-import logo from '@/assets/locatepro-logo.png';
+const appLogo = '/logo.png';
 
 export interface SetupData {
   admin?: AdminData;
@@ -91,7 +91,7 @@ export function SetupPage() {
       <div className="w-full max-w-xl">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <img src={logo} alt="LocatePro" className="h-10" />
+          <img src={appLogo} alt="Logo" className="h-8 w-auto dark:[filter:invert(1)_hue-rotate(180deg)]" />
         </div>
 
         {/* Progress indicator - only show after welcome */}
@@ -109,7 +109,7 @@ export function SetupPage() {
               <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
                 <Shield className="w-8 h-8 text-primary" />
               </div>
-              <CardTitle className="text-2xl">Welcome to LocatePro</CardTitle>
+              <CardTitle className="text-2xl">Welcome</CardTitle>
               <CardDescription className="text-base">
                 This appears to be a fresh installation. Let's configure your store locator platform.
               </CardDescription>

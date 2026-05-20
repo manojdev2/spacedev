@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useSubscription } from '@/hooks/useSubscription';
 import { useAppIdentity } from '@/hooks/useSystemConfig';
-import appLogo from '@/assets/logo.png';
+const appLogo = '/logo.png';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -46,19 +46,12 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <img 
-              src={appLogo} 
-              alt={appName} 
-              className="h-9 w-9 rounded-lg shadow-md group-hover:shadow-lg transition-shadow"
+          <Link to="/" className="flex items-center group">
+            <img
+              src={appLogo}
+              alt="Logo"
+              className="h-8 w-auto group-hover:opacity-80 transition-opacity dark:[filter:invert(1)_hue-rotate(180deg)]"
             />
-            <span className="text-xl font-bold text-foreground">
-              {appName.includes('Pro') ? (
-                <>{appName.replace('Pro', '')}<span className="text-gradient" style={{ color: primaryColor }}>Pro</span></>
-              ) : (
-                <span style={{ color: primaryColor }}>{appName}</span>
-              )}
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
