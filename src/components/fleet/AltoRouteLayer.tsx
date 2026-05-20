@@ -103,9 +103,22 @@ export function AltoRouteLayer({ routes }: Props) {
         .then((path) => {
           const polyline = new google.maps.Polyline({
             path,
-            strokeColor: "#1e3a8a",
-            strokeWeight: 3,
-            strokeOpacity: 0.9,
+            strokeColor: "#000000",
+            strokeWeight: 0,
+            strokeOpacity: 0,
+            icons: [
+              {
+                icon: {
+                  path: "M 0,-1 0,1",
+                  strokeOpacity: 1,
+                  strokeColor: "#000000",
+                  strokeWeight: 2.5,
+                  scale: 4,
+                },
+                offset: "0",
+                repeat: "16px",
+              },
+            ],
             map,
           });
           polylinesRef.current.push(polyline);
@@ -120,7 +133,7 @@ export function AltoRouteLayer({ routes }: Props) {
                 scale: 5,
                 fillColor: "#ffffff",
                 fillOpacity: 1,
-                strokeColor: "#1e3a8a",
+                strokeColor: "#000000",
                 strokeWeight: idx === 0 ? 2 : 2.5,
               },
             });
